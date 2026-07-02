@@ -598,25 +598,48 @@ function getHash(text) {
 
 async function loadAudio(text) {
   const hash = getHash(text);
+  if (!hash) throw new Error('短语未找到对应音频');
   if (audioCache.has(hash)) return audioCache.get(hash);
 
   const ctx = initAudioContext();
   const resp = await fetch(AUDIO_BASE + hash + '.json');
-  if (!resp.ok) throw new Error(`Audio not found: ${hash}`);
+  if (!resp.ok) throw new Error('音频文件不存在: ' + hash);
   const data = await resp.json();
-  if (!data.base64) throw new Error('No base64 data');
+  if (!data.base64) throw new Error('音频数据为空');
 
-  // Decode base64 to ArrayBuffer
+  // Decode base64 to raw MP3 bytes
   const binary = atob(data.base64);
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) {
-    bytes[i] = binary.charCodeAt(i);
+    bytes[i] = binary.charCodeAt(i) & 0xFF;
   }
+  // Create a proper copy of the ArrayBuffer
+  const arrayBuf = bytes.buffer.slice(0);
 
-  // Decode audio
-  const audioBuffer = await ctx.decodeAudioData(bytes.buffer);
-  audioCache.set(hash, audioBuffer);
-  return audioBuffer;
+  // Try Web Audio API decode first
+  try {
+    const audioBuffer = await ctx.decodeAudioData(arrayBuf);
+    audioCache.set(hash, audioBuffer);
+    return audioBuffer;
+  } catch(decodeErr) {
+    console.warn('decodeAudioData failed, trying HTMLAudioElement fallback:', decodeErr.message);
+    // Fallback: create blob URL and use Audio element
+    const blob = new Blob([arrayBuf], { type: 'audio/mpeg' });
+    const url = URL.createObjectURL(blob);
+    return new Promise((resolve, reject) => {
+      const audio = new Audio();
+      audio.oncanplaythrough = () => {
+        audioCache.set(hash, audio);
+        resolve(audio);
+      };
+      audio.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error('音频解码失败'));
+      };
+      audio.src = url;
+      audio.load();
+    });
+  }
 }
 
 function stopAudio() {
@@ -630,47 +653,59 @@ async function playItalian(text, rowElement) {
   stopAudio();
   if (currentRow) currentRow.classList.remove('playing');
 
-  const ctx = initAudioContext();
   const itaEl = rowElement ? rowElement.querySelector('.phrase-ita.clickable') : null;
-
-  // Show loading
   if (itaEl) itaEl.classList.add('loading');
   document.getElementById('playDot').classList.add('playing');
   document.getElementById('playStatus').textContent = '加载中...';
 
   try {
-    const audioBuffer = await loadAudio(text);
+    const audioData = await loadAudio(text);
     if (itaEl) itaEl.classList.remove('loading');
 
-    const source = ctx.createBufferSource();
-    source.buffer = audioBuffer;
-    source.playbackRate.value = currentSpeed;
-    source.connect(ctx.destination);
+    // audioData can be AudioBuffer (Web Audio API) or HTMLAudioElement (fallback)
+    if (audioData instanceof AudioBuffer) {
+      const ctx = initAudioContext();
+      const source = ctx.createBufferSource();
+      source.buffer = audioData;
+      source.playbackRate.value = currentSpeed;
+      source.connect(ctx.destination);
+      currentSource = source;
+      source.onended = finishPlayback;
+      source.start(0);
+    } else if (audioData instanceof HTMLAudioElement) {
+      audioData.playbackRate = currentSpeed;
+      audioData.onended = finishPlayback;
+      audioData.onerror = () => {
+        finishPlayback();
+        showToast('⚠️ 播放失败');
+      };
+      audioData.play().catch(e => {
+        finishPlayback();
+        showToast('⚠️ 播放被阻止，请先点击页面任意位置');
+      });
+      currentSource = audioData;
+      return; // finishPlayback will be called by onended
+    }
 
-    currentSource = source;
     if (rowElement) {
       currentRow = rowElement;
       rowElement.classList.add('playing');
     }
-
     document.getElementById('playStatus').textContent = '播放中...';
 
-    source.onended = () => {
-      if (rowElement) rowElement.classList.remove('playing');
-      document.getElementById('playDot').classList.remove('playing');
-      document.getElementById('playStatus').textContent = '就绪';
-      currentSource = null;
-      currentRow = null;
-    };
-
-    source.start(0);
   } catch(e) {
     console.error('Audio error:', e);
-    if (itaEl) itaEl.classList.remove('loading');
+    finishPlayback();
+    showToast('⚠️ ' + e.message);
+  }
+
+  function finishPlayback() {
     if (rowElement) rowElement.classList.remove('playing');
+    if (itaEl) itaEl.classList.remove('loading');
     document.getElementById('playDot').classList.remove('playing');
     document.getElementById('playStatus').textContent = '就绪';
-    showToast('⚠️ 音频加载失败: ' + e.message);
+    currentSource = null;
+    currentRow = null;
   }
 }
 
