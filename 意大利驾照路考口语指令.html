@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇮🇹 意大利驾照路考口语指令 — 交互式学习</title>
+<style>
+:root {
+  --flag-green: #009246;
+  --flag-white: #FFFFFF;
+  --flag-red: #CE2B37;
+  --green-dark: #007A3A;
+  --red-dark: #B52330;
+  --bg: #f5f6f8;
+  --bg-card: #ffffff;
+  --bg-hover: #f0fdf4;
+  --bg-playing: #ecfdf5;
+  --text: #1c1c2e;
+  --text-dim: #6b7280;
+  --text-accent: #4b5563;
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
+  --gold: #b8860b;
+  --gold-bg: #fffbeb;
+  --green-bg: #f0fdf4;
+  --red-bg: #fef2f2;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.12);
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* ═══ ITALIAN FLAG HEADER ═══ */
+.flag-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 56px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: flex; align-items: center;
+  border-bottom: 3px solid #e5e7eb;
+}
+/* Flag gradient bar below header */
+.flag-header::after {
+  content: '';
+  position: absolute; bottom: -6px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--flag-green) 33.33%, var(--flag-white) 33.33%, var(--flag-white) 66.66%, var(--flag-red) 66.66%);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.flag-stripes {
+  display: flex; height: 100%; width: 18px; flex-shrink: 0;
+}
+.flag-stripes .stripe { flex: 1; }
+.flag-stripes .stripe.g { background: var(--flag-green); }
+.flag-stripes .stripe.w { background: var(--flag-white); }
+.flag-stripes .stripe.r { background: var(--flag-red); }
+
+.flag-title {
+  font-size: 1.1rem; font-weight: 700; color: var(--text);
+  padding: 0 16px; white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+}
+/* CSS-only Italian flag icon */
+.flag-icon {
+  display: inline-block; width: 26px; height: 20px; flex-shrink: 0;
+  border-radius: 3px; overflow: hidden;
+  background: linear-gradient(90deg,
+    var(--flag-green) 0%, var(--flag-green) 33.33%,
+    var(--flag-white) 33.33%, var(--flag-white) 66.66%,
+    var(--flag-red) 66.66%, var(--flag-red) 100%);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  vertical-align: middle;
+}
+
+.flag-dots {
+  margin-left: auto; display: flex; gap: 5px; padding: 0 20px;
+}
+.flag-dots .fd { width: 10px; height: 10px; border-radius: 50%; }
+.flag-dots .fd:nth-child(1) { background: var(--flag-green); }
+.flag-dots .fd:nth-child(2) { background: var(--border-strong); }
+.flag-dots .fd:nth-child(3) { background: var(--flag-red); }
+
+/* ═══ SIDEBAR ═══ */
+.sidebar {
+  position: fixed; top: 56px; left: 0; bottom: 0;
+  width: 250px;
+  background: #fff;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 99;
+  padding: 16px 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar::-webkit-scrollbar { width: 5px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+
+.sidebar-section-title {
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-dim); padding: 8px 16px 4px;
+}
+.sidebar-divider {
+  margin: 8px 12px; border: none; border-top: 1px solid var(--border);
+}
+
+.nav-module {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 16px; margin: 1px 8px;
+  border-radius: var(--radius-sm);
+  color: var(--text-accent);
+  text-decoration: none;
+  font-size: 0.83rem; font-weight: 500;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.nav-module:hover {
+  background: var(--bg-hover);
+  color: var(--flag-green);
+}
+.nav-module.active {
+  background: var(--green-bg);
+  color: var(--flag-green);
+  font-weight: 700;
+}
+.nav-badge {
+  font-size: 0.65rem; padding: 1px 7px; border-radius: 10px;
+  font-weight: 600; flex-shrink: 0;
+  background: var(--green-bg); color: var(--flag-green);
+}
+.nav-badge.must { background: var(--red-bg); color: var(--flag-red); }
+.nav-star { color: var(--gold); font-size: 0.75rem; margin-left: auto; }
+
+/* ═══ SPEED BAR ═══ */
+.speed-bar {
+  position: fixed; top: 56px; left: 250px; right: 0;
+  height: 46px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 24px;
+  z-index: 98;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.speed-label {
+  font-size: 0.78rem; color: var(--text-dim);
+  font-weight: 600; flex-shrink: 0;
+}
+.speed-btn {
+  padding: 5px 16px; border: 1.5px solid var(--border-strong);
+  border-radius: 20px; background: #fff;
+  color: var(--text-accent);
+  font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; transition: var(--transition);
+  user-select: none;
+}
+.speed-btn:hover { border-color: var(--flag-green); color: var(--flag-green); background: var(--green-bg); }
+.speed-btn.active {
+  background: var(--flag-green); border-color: var(--flag-green);
+  color: #fff; box-shadow: 0 2px 8px rgba(0,146,70,0.3);
+}
+.speed-status {
+  margin-left: auto; font-size: 0.74rem; color: var(--text-dim);
+  display: flex; align-items: center; gap: 6px;
+}
+.speed-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #d1d5db; transition: var(--transition);
+}
+.speed-dot.playing { background: #10b981; box-shadow: 0 0 8px rgba(16,185,129,0.5); animation: pulse-dot 1s infinite; }
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 4px rgba(16,185,129,0.4); }
+  50% { box-shadow: 0 0 14px rgba(16,185,129,0.7); }
+}
+
+/* ═══ MAIN CONTENT ═══ */
+.main-content {
+  margin-left: 250px; margin-top: 102px;
+  padding: 28px 32px 60px;
+  max-width: 960px; width: 100%;
+}
+
+/* ═══ MODULE SECTION ═══ */
+.module-section {
+  margin-bottom: 40px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+
+.module-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px; padding-bottom: 14px;
+  border-bottom: 2px solid var(--border);
+  position: relative;
+}
+.module-header::after {
+  content: '';
+  position: absolute; bottom: -2px; left: 0;
+  width: 80px; height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--flag-green), var(--flag-red));
+}
+.module-num {
+  font-size: 0.74rem; font-weight: 700;
+  background: var(--green-bg); color: var(--flag-green);
+  padding: 4px 12px; border-radius: 14px; flex-shrink: 0;
+}
+.module-title {
+  font-size: 1.22rem; font-weight: 700; flex: 1; color: var(--text);
+}
+.module-badge {
+  font-size: 0.7rem; padding: 3px 12px; border-radius: 14px;
+  font-weight: 700; flex-shrink: 0;
+}
+.badge-must-know { background: var(--red-bg); color: var(--flag-red); }
+.badge-high { background: var(--gold-bg); color: var(--gold); }
+.badge-medium { background: var(--green-bg); color: var(--flag-green); }
+
+.module-desc {
+  font-size: 0.85rem; color: var(--text-accent);
+  margin-bottom: 18px; padding: 12px 16px;
+  background: #f9fafb; border-left: 4px solid var(--flag-green);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  line-height: 1.75;
+}
+.module-desc strong { color: var(--flag-red); }
+
+/* ═══ PHRASE TABLE ═══ */
+.phrase-table {
+  width: 100%; border-collapse: separate; border-spacing: 0 3px;
+}
+.phrase-table th {
+  padding: 10px 12px; font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-dim); text-align: left;
+  border-bottom: 2px solid var(--border);
+  background: #fafbfc;
+}
+.phrase-table th.col-num { width: 34px; text-align: center; }
+.phrase-table th.col-ita { width: 56%; }
+.phrase-table th.col-cn { width: 22%; }
+.phrase-table th.col-type { width: 56px; text-align: center; }
+
+.phrase-row {
+  transition: var(--transition);
+  border-radius: var(--radius-sm);
+}
+.phrase-row:hover { background: #f9fafb; }
+.phrase-row.playing {
+  background: var(--bg-playing) !important;
+  box-shadow: inset 3px 0 0 var(--flag-green);
+  animation: playingPulse 1.8s ease-in-out infinite;
+}
+@keyframes playingPulse {
+  0%, 100% { box-shadow: inset 3px 0 0 var(--flag-green), 0 0 0 rgba(0,146,70,0); }
+  50% { box-shadow: inset 3px 0 0 var(--flag-green), 0 0 16px rgba(0,146,70,0.12); }
+}
+
+.phrase-row td {
+  padding: 10px 12px; font-size: 0.86rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f3f4f6;
+}
+.phrase-num {
+  text-align: center; color: var(--text-dim);
+  font-size: 0.73rem; font-weight: 600;
+}
+.phrase-ita {
+  font-weight: 600; color: var(--text);
+  transition: var(--transition);
+  position: relative;
+}
+.phrase-ita.clickable {
+  display: inline-block; padding: 5px 10px; margin: -5px -10px;
+  border-radius: 6px; cursor: pointer;
+}
+.phrase-ita.clickable:hover { background: var(--green-bg); color: var(--flag-green); }
+.phrase-ita.clickable:active { transform: scale(0.98); }
+
+.phrase-ita .play-icon {
+  display: inline-block; opacity: 0; transition: var(--transition);
+  margin-right: 4px; font-size: 0.72rem; vertical-align: middle;
+}
+.phrase-ita.clickable:hover .play-icon,
+.phrase-row.playing .play-icon { opacity: 1; }
+.phrase-row.playing .phrase-ita.clickable { color: var(--flag-green); }
+
+/* Playing spinner overlay */
+.phrase-ita .spinner {
+  display: none; width: 14px; height: 14px; border: 2px solid #e5e7eb;
+  border-top-color: var(--flag-green); border-radius: 50%;
+  margin-right: 6px; vertical-align: middle; animation: spin 0.6s linear infinite;
+}
+.phrase-ita.loading .play-icon { display: none; }
+.phrase-ita.loading .spinner { display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.phrase-cn { color: var(--text-accent); font-size: 0.82rem; }
+.phrase-type { text-align: center; font-size: 0.9rem; }
+.phrase-detail {
+  display: block; font-size: 0.76rem; color: var(--text-dim);
+  line-height: 1.5; margin-top: 4px; font-weight: 400;
+}
+
+/* ═══ SUB-SECTION ═══ */
+.sub-section-title {
+  font-size: 0.95rem; font-weight: 700; color: var(--text);
+  margin: 22px 0 12px; padding-left: 12px;
+  border-left: 3px solid var(--flag-green);
+}
+
+/* ═══ TIP BOXES ═══ */
+.tip-box {
+  margin: 16px 0; padding: 14px 18px; border-radius: var(--radius-sm);
+  font-size: 0.83rem; line-height: 1.7;
+}
+.tip-box.mnemonic { background: var(--gold-bg); border: 1px solid #fde68a; border-left: 4px solid var(--gold); }
+.tip-box.alert { background: var(--red-bg); border: 1px solid #fecaca; border-left: 4px solid var(--flag-red); }
+.tip-box.info { background: var(--green-bg); border: 1px solid #bbf7d0; border-left: 4px solid var(--flag-green); }
+.tip-box .tip-icon { font-size: 1.05rem; margin-right: 6px; }
+
+/* ═══ COMPARE TABLE ═══ */
+.compare-table {
+  width: 100%; border-collapse: collapse; margin: 14px 0;
+  font-size: 0.81rem; border-radius: var(--radius-sm); overflow: hidden;
+  border: 1px solid var(--border);
+}
+.compare-table th {
+  background: #f9fafb; padding: 10px 14px;
+  text-align: left; font-size: 0.76rem; font-weight: 700;
+  color: var(--text-accent);
+}
+.compare-table td { padding: 9px 14px; border-top: 1px solid var(--border); }
+.compare-table tr:hover td { background: #f9fafb; }
+
+/* ═══ FLOW BLOCK ═══ */
+.flow-block {
+  margin: 12px 0; padding: 14px 18px;
+  background: #f9fafb; border-radius: var(--radius-sm);
+  font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 0.79rem; color: var(--text-accent);
+  white-space: pre; overflow-x: auto;
+  border: 1px solid var(--border);
+}
+
+/* ═══ STUDY GRID ═══ */
+.study-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px; margin: 14px 0;
+}
+.study-day {
+  padding: 14px 12px; background: #f9fafb; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); text-align: center;
+  font-size: 0.76rem; line-height: 1.5;
+  transition: var(--transition);
+}
+.study-day:hover { background: var(--green-bg); border-color: #bbf7d0; }
+.study-day .day-num {
+  font-size: 0.88rem; font-weight: 700; color: var(--flag-green);
+  display: block; margin-bottom: 4px;
+}
+
+/* ═══ TOAST ═══ */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: #1c1c2e; color: #fff; padding: 10px 24px;
+  border-radius: 24px; font-size: 0.82rem; font-weight: 600;
+  box-shadow: var(--shadow-lg); z-index: 9999;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  display: flex; align-items: center; gap: 8px;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+/* ═══ SCROLL TOP ═══ */
+.scroll-top {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--flag-green); border: none;
+  color: #fff; font-size: 1.15rem; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,146,70,0.3);
+  z-index: 99; transition: var(--transition);
+  opacity: 0; pointer-events: none;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(0,146,70,0.4); }
+
+/* ═══ HAMBURGER MENU ═══ */
+.hamburger-btn {
+  display: none;
+  width: 40px; height: 40px;
+  background: none; border: none;
+  cursor: pointer; padding: 8px;
+  flex-shrink: 0; margin-right: 4px;
+  z-index: 1010;
+}
+.hamburger-btn span {
+  display: block; width: 22px; height: 2.5px;
+  background: var(--text);
+  margin: 5px 0; border-radius: 2px;
+  transition: var(--transition);
+}
+.hamburger-btn.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; }
+.hamburger-btn.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+/* Mobile nav overlay */
+.mobile-nav-overlay {
+  display: none;
+  position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1005;
+  opacity: 0; transition: opacity 0.3s;
+}
+.mobile-nav-overlay.show { opacity: 1; }
+
+.mobile-nav-panel {
+  position: fixed; top: 56px; left: 0; bottom: 0;
+  width: 280px; max-width: 85vw;
+  background: #fff;
+  z-index: 1006; overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: var(--shadow-lg);
+  padding: 8px 0 24px;
+}
+.mobile-nav-panel.open { transform: translateX(0); }
+
+.mobile-nav-panel .nav-section-label {
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-dim); padding: 12px 20px 6px;
+}
+.mobile-nav-panel .nav-divider {
+  margin: 6px 16px; border: none; border-top: 1px solid var(--border);
+}
+.mobile-nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 20px; margin: 2px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--text-accent); text-decoration: none;
+  font-size: 0.88rem; font-weight: 500;
+  transition: var(--transition); cursor: pointer;
+}
+.mobile-nav-item:hover, .mobile-nav-item:active { background: var(--bg-hover); color: var(--flag-green); }
+.mobile-nav-item .mni-badge {
+  font-size: 0.68rem; padding: 2px 8px; border-radius: 10px;
+  font-weight: 700; background: var(--green-bg); color: var(--flag-green);
+}
+.mobile-nav-item .mni-badge.must { background: var(--red-bg); color: var(--flag-red); }
+.mobile-nav-item .mni-star { color: var(--gold); margin-left: auto; font-size: 0.8rem; }
+
+/* ═══ MOBILE ═══ */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .hamburger-btn { display: block; }
+  .mobile-nav-overlay { display: block; pointer-events: none; }
+  .mobile-nav-overlay.show { pointer-events: auto; }
+  .mobile-nav-panel { display: block; }
+  .speed-bar { left: 0; flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 6px; }
+  .speed-label { font-size: 0.72rem; }
+  .speed-btn { padding: 4px 10px; font-size: 0.7rem; }
+  .speed-status { font-size: 0.68rem; }
+  .main-content { margin-left: 0; margin-top: 98px; padding: 12px 8px 60px; }
+  .module-section { padding: 14px; border-radius: 8px; }
+  .module-header { flex-wrap: wrap; }
+  .module-title { font-size: 1rem; }
+  .phrase-table th, .phrase-table td { padding: 8px 6px; font-size: 0.78rem; }
+  .phrase-table th.col-type, .phrase-type { display: none; }
+  .phrase-ita.clickable { padding: 3px 6px; margin: -3px -6px; }
+  .flag-title { font-size: 0.9rem; padding: 0 8px; }
+  .flag-dots { padding: 0 10px; }
+  .flag-dots .fd { width: 7px; height: 7px; }
+  .scroll-top { width: 38px; height: 38px; bottom: 20px; right: 16px; }
+}
+
+/* ═══ MINI FLAG DECORATION ═══ */
+.mini-flag {
+  display: inline-flex; width: 36px; height: 22px; border-radius: 3px;
+  overflow: hidden; vertical-align: middle; margin: 0 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.mini-flag span { flex: 1; }
+.mini-flag .g { background: var(--flag-green); }
+.mini-flag .w { background: var(--flag-white); }
+.mini-flag .r { background: var(--flag-red); }
+</style>
+</head>
+<body>
+
+<!-- Italian Flag Header -->
+<header class="flag-header">
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="菜单">
+    <span></span><span></span><span></span>
+  </button>
+  <span class="flag-title"><span class="flag-icon"></span>意大利驾照路考口语指令</span>
+  <div class="flag-dots">
+    <span class="fd"></span><span class="fd"></span><span class="fd"></span>
+  </div>
+</header>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav-overlay" id="mobileOverlay"></div>
+<div class="mobile-nav-panel" id="mobilePanel">
+  <div class="nav-section-label">📋 考试模块</div>
+  <nav id="mobileNav"></nav>
+  <div class="nav-divider"></div>
+  <div class="nav-section-label">📚 附录 & 资料</div>
+  <nav id="mobileAppendix"></nav>
+</div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-section-title">📋 考试模块</div>
+  <nav id="sidebarNav"></nav>
+  <hr class="sidebar-divider">
+  <div class="sidebar-section-title">📚 附录 & 资料</div>
+  <nav id="sidebarAppendix"></nav>
+</aside>
+
+<!-- Speed Bar -->
+<div class="speed-bar" id="speedBar">
+  <span class="speed-label">🎙️ 发音速度</span>
+  <button class="speed-btn" data-speed="0.6">🐢 0.6×</button>
+  <button class="speed-btn active" data-speed="1.0">🚶 1.0×</button>
+  <button class="speed-btn" data-speed="1.4">🐇 1.4×</button>
+  <span class="speed-status">
+    <span class="speed-dot" id="playDot"></span>
+    <span id="playStatus">就绪</span>
+  </span>
+</div>
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent"></main>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ═══════════════════════════════════════
+//  AUDIO ENGINE — base64 JSON loader
+// ═══════════════════════════════════════
+
+const AUDIO_BASE = 'audio/';
+let audioIndex = {};          // { text: hash }
+let audioCache = new Map();   // { hash: AudioBuffer }
+let currentSpeed = 1.0;
+let currentSource = null;
+let currentRow = null;
+let audioCtx = null;
+
+function initAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+async function loadAudioIndex() {
+  try {
+    const resp = await fetch(AUDIO_BASE + '_index.json');
+    if (!resp.ok) throw new Error('Index not found');
+    audioIndex = await resp.json();
+    console.log('📋 Audio index loaded:', Object.keys(audioIndex).length, 'phrases');
+  } catch(e) {
+    console.warn('Audio index not available, using hash fallback:', e.message);
+  }
+}
+
+function getHash(text) {
+  if (audioIndex[text]) return audioIndex[text];
+  // Fallback: compute MD5-like hash (simple djb2)
+  let hash = 5381;
+  for (let i = 0; i < text.length; i++) {
+    hash = ((hash << 5) + hash + text.charCodeAt(i)) | 0;
+  }
+  return (hash >>> 0).toString(16).padStart(8, '0').slice(0, 8);
+}
+
+async function loadAudio(text) {
+  const hash = getHash(text);
+  if (audioCache.has(hash)) return audioCache.get(hash);
+
+  const ctx = initAudioContext();
+  const resp = await fetch(AUDIO_BASE + hash + '.json');
+  if (!resp.ok) throw new Error(`Audio not found: ${hash}`);
+  const data = await resp.json();
+  if (!data.base64) throw new Error('No base64 data');
+
+  // Decode base64 to ArrayBuffer
+  const binary = atob(data.base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  // Decode audio
+  const audioBuffer = await ctx.decodeAudioData(bytes.buffer);
+  audioCache.set(hash, audioBuffer);
+  return audioBuffer;
+}
+
+function stopAudio() {
+  if (currentSource) {
+    try { currentSource.stop(); } catch(e) {}
+    currentSource = null;
+  }
+}
+
+async function playItalian(text, rowElement) {
+  stopAudio();
+  if (currentRow) currentRow.classList.remove('playing');
+
+  const ctx = initAudioContext();
+  const itaEl = rowElement ? rowElement.querySelector('.phrase-ita.clickable') : null;
+
+  // Show loading
+  if (itaEl) itaEl.classList.add('loading');
+  document.getElementById('playDot').classList.add('playing');
+  document.getElementById('playStatus').textContent = '加载中...';
+
+  try {
+    const audioBuffer = await loadAudio(text);
+    if (itaEl) itaEl.classList.remove('loading');
+
+    const source = ctx.createBufferSource();
+    source.buffer = audioBuffer;
+    source.playbackRate.value = currentSpeed;
+    source.connect(ctx.destination);
+
+    currentSource = source;
+    if (rowElement) {
+      currentRow = rowElement;
+      rowElement.classList.add('playing');
+    }
+
+    document.getElementById('playStatus').textContent = '播放中...';
+
+    source.onended = () => {
+      if (rowElement) rowElement.classList.remove('playing');
+      document.getElementById('playDot').classList.remove('playing');
+      document.getElementById('playStatus').textContent = '就绪';
+      currentSource = null;
+      currentRow = null;
+    };
+
+    source.start(0);
+  } catch(e) {
+    console.error('Audio error:', e);
+    if (itaEl) itaEl.classList.remove('loading');
+    if (rowElement) rowElement.classList.remove('playing');
+    document.getElementById('playDot').classList.remove('playing');
+    document.getElementById('playStatus').textContent = '就绪';
+    showToast('⚠️ 音频加载失败: ' + e.message);
+  }
+}
+
+// ═══════════════════════════════════════
+//  SPEED CONTROL
+// ═══════════════════════════════════════
+
+const speedBtns = document.querySelectorAll('.speed-btn');
+const toast = document.getElementById('toast');
+
+speedBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    speedBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentSpeed = parseFloat(btn.dataset.speed);
+    showToast('发音速度: ' + btn.textContent.trim());
+  });
+});
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+// ═══════════════════════════════════════
+//  DATA — Same as before
+// ═══════════════════════════════════════
+
+const MODULES = [
+  {
+    id: 'modulo0',
+    title: '模块〇：考前准备 & 考官问答',
+    subtitle: 'Preparazione & Domande Esaminatore',
+    badge: '必考！',
+    badgeClass: 'badge-must-know',
+    desc: '<strong>🚨 最关键模块！</strong> 上车后考官首先会问你2-3个关于车辆检查的理论问题。答不上来？考试直接结束！',
+    star: true,
+    subSections: [
+      {
+        title: '一、上车基本准备',
+        phrases: [
+          { ita: 'Regola il sedile', cn: '调整座椅', type: '🎧' },
+          { ita: 'Regola il poggiatesta', cn: '调整头枕', type: '🎧' },
+          { ita: 'Regola gli specchietti', cn: '调整后视镜', type: '🎧' },
+          { ita: 'Controlla la chiusura delle porte', cn: '检查车门是否关好', type: '🎧' },
+          { ita: 'Allaccia la cintura di sicurezza', cn: '系好安全带', type: '🎧' },
+          { ita: 'Consegna i documenti', cn: '提交证件', type: '🎧' },
+        ]
+      },
+      {
+        title: '二、考官高频问题 — 轮胎',
+        phrases: [
+          { ita: 'Come si controlla lo spessore del battistrada?', cn: '如何检查胎面厚度？', type: '🎧🗣️' },
+          { ita: 'Qual è la pressione corretta degli pneumatici?', cn: '正确的胎压是多少？', type: '🎧🗣️' },
+          { ita: 'Come si controlla la pressione di gonfiaggio?', cn: '怎么检查胎压？', type: '🎧🗣️' },
+        ]
+      },
+      {
+        title: '二、考官高频问题 — 机油',
+        phrases: [
+          { ita: 'Come si controlla il livello dell\'olio motore?', cn: '怎么检查机油油位？', type: '🎧🗣️' },
+        ]
+      },
+      {
+        title: '二、考官高频问题 — 刹车',
+        phrases: [
+          { ita: 'Come si controlla il freno a mano?', cn: '怎么检查手刹？', type: '🎧🗣️' },
+          { ita: 'Come si verifica il liquido dei freni?', cn: '怎么检查刹车油？', type: '🎧🗣️' },
+        ]
+      },
+      {
+        title: '二、考官高频问题 — 灯光',
+        phrases: [
+          { ita: 'Come si accendono i fari anabbaglianti?', cn: '如何打开近光灯？', type: '🎧🗣️' },
+          { ita: 'Come si accendono gli abbaglianti?', cn: '如何打开远光灯？', type: '🎧🗣️' },
+          { ita: 'Cosa indica la spia rossa sul cruscotto?', cn: '仪表盘红色指示灯？', type: '🎧🗣️' },
+          { ita: 'Come si attivano le quattro frecce?', cn: '如何开启双闪？', type: '🎧' },
+        ]
+      },
+      {
+        title: '二、考官高频问题 — 雨刷 & 液位',
+        phrases: [
+          { ita: 'Come si attivano i tergicristalli?', cn: '怎么开启雨刷？', type: '🎧' },
+          { ita: 'Come si controlla il liquido lavavetri?', cn: '怎么检查玻璃水？', type: '🎧' },
+        ]
+      },
+      {
+        title: '二、考官高频问题 — 文件',
+        phrases: [
+          { ita: 'Quali documenti bisogna portare per guidare?', cn: '开车需要带哪些证件？', type: '🎧🗣️' },
+          { ita: 'Dove si trova il triangolo di emergenza?', cn: '三角警示牌在哪里？', type: '🎧' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'modulo1',
+    title: '模块一：起步',
+    subtitle: 'Partenza / Avvio',
+    badge: '高频',
+    badgeClass: 'badge-high',
+    desc: '考官的起步指令，听到后立即执行。',
+    mnemonic: '"一发动，二看镜，三系带，四踩板，五挂档，六观前，七左右，八缓行，九打灯"',
+    phrases: [
+      { ita: 'Accendi il motore', cn: '发动引擎', type: '🎧' },
+      { ita: 'Controlla gli specchietti prima di partire', cn: '起步前检查后视镜', type: '🎧' },
+      { ita: 'Metti la cintura di sicurezza', cn: '系好安全带', type: '🎧' },
+      { ita: 'Controlla i pedali', cn: '检查踏板', type: '🎧' },
+      { ita: 'Metti la prima marcia', cn: '挂入一档', type: '🎧' },
+      { ita: 'Controlla la strada davanti e dietro', cn: '观察前方及后方', type: '🎧' },
+      { ita: 'Guarda a destra e sinistra', cn: '左右观察', type: '🎧' },
+      { ita: 'Riparti con cautela', cn: '小心起步', type: '🎧' },
+      { ita: 'Segnala con la freccia se necessario', cn: '如有需要，打转向灯', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo2',
+    title: '模块二：行驶',
+    subtitle: 'Guida / Circolazione',
+    badge: '高频',
+    badgeClass: 'badge-high',
+    desc: '正常行驶过程中的指令，考察基本驾驶素养和安全意识。',
+    mnemonic: '"速度适当不猛加，该慢就慢距两秒，三镜全看过盲区，车道标线守到底"',
+    phrases: [
+      { ita: 'Mantieni la velocità corretta', cn: '保持正确速度', type: '🎧' },
+      { ita: 'Accelera dolcemente', cn: '轻踩油门加速', type: '🎧' },
+      { ita: 'Rallenta quando serve', cn: '需要时减速', type: '🎧' },
+      { ita: 'Mantieni la distanza di sicurezza', cn: '保持安全距离', type: '🎧' },
+      { ita: 'Controlla lo specchietto retrovisore centrale', cn: '看中间后视镜', type: '🎧' },
+      { ita: 'Controlla gli specchietti laterali', cn: '看左右后视镜', type: '🎧' },
+      { ita: 'Guarda avanti', cn: '注意前方', type: '🎧' },
+      { ita: 'Segui la segnaletica', cn: '遵守交通标线', type: '🎧' },
+      { ita: 'Stai nella tua corsia', cn: '保持车道', type: '🎧' },
+      { ita: 'Usa correttamente gli indicatori', cn: '正确使用转向灯', type: '🎧' },
+      { ita: 'Controlla lo stato del traffico', cn: '注意周围车辆', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo3',
+    title: '模块三：转弯',
+    subtitle: 'Svolta / Curva',
+    badge: '高频',
+    badgeClass: 'badge-high',
+    desc: '转弯指令是路考中的高频考点，考官重点观察你的观察习惯和操作规范性。',
+    mnemonic: '"左右转弯先减速，三十米前灯亮起，看镜看人看标志，不压线来不切弯"',
+    phrases: [
+      { ita: 'Svolta a destra', cn: '右转', type: '🎧' },
+      { ita: 'Svolta a sinistra', cn: '左转', type: '🎧' },
+      { ita: 'Riduci la velocità prima della curva', cn: '转弯前减速', type: '🎧' },
+      { ita: 'Controlla gli specchietti prima di girare', cn: '转弯前看后视镜', type: '🎧' },
+      { ita: 'Usa la freccia almeno 30 metri prima', cn: '提前30米打转向灯', type: '🎧' },
+      { ita: 'Non tagliare la curva', cn: '不切弯/不压弯道', type: '🎧' },
+      { ita: 'Mantieni la corsia durante la curva', cn: '转弯保持车道', type: '🎧' },
+      { ita: 'Controlla eventuali pedoni', cn: '注意行人', type: '🎧' },
+      { ita: 'Guarda la segnaletica verticale', cn: '注意交通标志', type: '🎧' },
+      { ita: 'Guarda eventuali veicoli provenienti dall\'altra corsia', cn: '注意对向车', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo4',
+    title: '模块四：变道 & 超车',
+    subtitle: 'Cambio corsia / Sorpasso',
+    badge: '高频',
+    badgeClass: 'badge-high',
+    desc: '变道和超车是路考中风险最高的操作。',
+    mnemonic: '"灯镜盲区三步走，弯道实线绝不变，安全确认再超车，超完记得回原道"',
+    flow: '打灯（3秒前）→ 看中央镜 → 看侧镜 → 转头查盲区 → 平稳变道 → 关灯',
+    phrases: [
+      { ita: 'Cambia corsia a destra / sinistra', cn: '向右/左变道', type: '🎧' },
+      { ita: 'Controlla gli specchietti prima di cambiare corsia', cn: '变道前看后视镜', type: '🎧' },
+      { ita: 'Controlla l\'angolo cieco', cn: '检查盲区', type: '🎧' },
+      { ita: 'Usa la freccia prima di cambiare corsia', cn: '变道前打转向灯', type: '🎧' },
+      { ita: 'Non cambiare corsia in curva', cn: '弯道内不要变道', type: '🎧' },
+      { ita: 'Non cambiare corsia su linea continua', cn: '实线不要变道', type: '🎧' },
+      { ita: 'Sorpassa solo se sicuro', cn: '确认安全再超车', type: '🎧' },
+      { ita: 'Controlla il traffico dietro', cn: '查看后方车辆', type: '🎧' },
+      { ita: 'Tornare nella corsia iniziale se necessario', cn: '必要时回原车道', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo5',
+    title: '模块五：环岛',
+    subtitle: 'Rotatoria',
+    badge: '必考！',
+    badgeClass: 'badge-must-know',
+    desc: '<strong>⚠️ 最高频考点！</strong> 意大利以环岛多著称，几乎所有路考都会经过环岛。',
+    star: true,
+    mnemonic: '"一出口右灯外道出，二出口无灯过一打，三出口左灯内道走，出环打右不忘后"',
+    phrases: [
+      { ita: 'Entra nella rotonda', cn: '进入环岛', type: '🎧' },
+      { ita: 'Prendi la prima uscita', cn: '第一个出口驶出', type: '🎧' },
+      { ita: 'Prendi la seconda uscita', cn: '第二个出口驶出', type: '🎧' },
+      { ita: 'Prendi la terza uscita', cn: '第三个及之后出口驶出', type: '🎧' },
+      { ita: 'Dai la precedenza a chi è dentro la rotonda', cn: '让行环岛内车辆', type: '🎧' },
+      { ita: 'Non fermarti dentro la rotonda', cn: '不要在环岛内停车', type: '🎧' },
+      { ita: 'Segnala l\'uscita dalla rotonda', cn: '驶出环岛时打右灯', type: '🎧' },
+      { ita: 'Mantieni la corsia nella rotonda', cn: '在环岛内保持车道', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo6',
+    title: '模块六：停车 & 倒车',
+    subtitle: 'Parcheggio / Retromarcia',
+    badge: '高频',
+    badgeClass: 'badge-high',
+    desc: '停车操作包括L型停车、S型停车、平行停车、倒车等。',
+    mnemonic: '"一灯二镜三观察，慢倒转头看后方；L看灯S看半窗，停稳拉刹距半米"',
+    phrases: [
+      { ita: 'Parcheggia parallelamente al marciapiede', cn: '平行停车', type: '🎧' },
+      { ita: 'Fai un parcheggio a L', cn: 'L型停车', type: '🎧' },
+      { ita: 'Fai un parcheggio a S', cn: 'S型停车', type: '🎧' },
+      { ita: 'Fai retromarcia lentamente', cn: '慢慢倒车', type: '🎧' },
+      { ita: 'Controlla gli specchietti durante il parcheggio', cn: '停车时看后视镜', type: '🎧' },
+      { ita: 'Usa la freccia quando parcheggi', cn: '停车前打转向灯', type: '🎧' },
+      { ita: 'Mantieni la distanza dal marciapiede', cn: '与人行道保持距离', type: '🎧' },
+      { ita: 'Ferma il veicolo completamente', cn: '完全停车', type: '🎧' },
+      { ita: 'Tieni il freno a mano inserito', cn: '拉紧手刹', type: '🎧' },
+      { ita: 'Controlla lo spazio dietro', cn: '检查车后空间', type: '🎧' },
+      { ita: 'Non urtare altri veicoli', cn: '不碰其他车辆', type: '🎧' },
+      { ita: 'Inserisci la retromarcia', cn: '挂倒档', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo7',
+    title: '模块七：坡道起步',
+    subtitle: 'Partenza in salita',
+    badge: '中频',
+    badgeClass: 'badge-medium',
+    desc: '意大利多山多丘陵，坡道起步是必考项。',
+    mnemonic: '"踩离合，挂一档，加油门，抬离合，车抬头，松手刹，稳出发"',
+    phrases: [
+      { ita: 'Ferma il veicolo in salita', cn: '在上坡处停车', type: '🎧' },
+      { ita: 'Riparti in salita', cn: '坡道起步', type: '🎧' },
+      { ita: 'Non far spegnere il motore', cn: '不要熄火', type: '🎧' },
+      { ita: 'Non arretrare', cn: '不要后溜', type: '🎧' },
+      { ita: 'Usa il freno a mano se necessario', cn: '必要时用手刹', type: '🎧' },
+      { ita: 'Controlla il traffico prima di ripartire', cn: '起步前观察周围交通', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo8',
+    title: '模块八：高速公路',
+    subtitle: 'Autostrada',
+    badge: '高频',
+    badgeClass: 'badge-high',
+    desc: '如果考场位置允许，考官会带你上高速。意大利高速公路操作规范严格。',
+    mnemonic: '"加速道到匹配速，打灯看镜盲区入；右行左超不右边，提前变道出口出"',
+    phrases: [
+      { ita: 'Imbocca l\'autostrada', cn: '驶入高速公路', type: '🎧' },
+      { ita: 'Accelera nella corsia di accelerazione', cn: '在加速车道加速', type: '🎧' },
+      { ita: 'Guarda bene prima di immetterti', cn: '汇入前仔细观察', type: '🎧' },
+      { ita: 'Mantieni la destra', cn: '保持在右侧车道', type: '🎧' },
+      { ita: 'Rispetta i limiti di velocità in autostrada', cn: '遵守高速限速', type: '🎧' },
+      { ita: 'Non sorpassare a destra', cn: '不要右侧超车', type: '🎧' },
+      { ita: 'Prepara l\'uscita con anticipo', cn: '提前准备出口', type: '🎧' },
+      { ita: 'Entra nella corsia di decelerazione', cn: '进入减速车道', type: '🎧' },
+      { ita: 'Esci dall\'autostrada', cn: '驶出高速公路', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo9',
+    title: '模块九：灯光使用',
+    subtitle: 'Uso luci',
+    badge: '高频',
+    badgeClass: 'badge-high',
+    desc: '考官会在路考中让你演示各种灯光操作。意大利对灯光使用有严格规定。',
+    phrases: [
+      { ita: 'Accendi i fari anabbaglianti', cn: '打开近光灯', type: '🎧' },
+      { ita: 'Accendi gli abbaglianti', cn: '打开远光灯', type: '🎧' },
+      { ita: 'Spegni gli abbaglianti', cn: '关掉远光灯', type: '🎧' },
+      { ita: 'Accendi le luci di posizione', cn: '打开示宽灯', type: '🎧' },
+      { ita: 'Accendi i fendinebbia anteriori', cn: '打开前雾灯', type: '🎧' },
+      { ita: 'Accendi i retronebbia', cn: '打开后雾灯', type: '🎧' },
+      { ita: 'Usa le luci in galleria', cn: '隧道内开灯', type: '🎧' },
+      { ita: 'Verifica il funzionamento delle frecce', cn: '检查转向灯', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo10',
+    title: '模块十：紧急情况',
+    subtitle: 'Emergenza',
+    badge: '高频',
+    badgeClass: 'badge-high',
+    desc: '考察驾驶员在突发状况下的应急反应能力。安全驾驶的核心模块。',
+    mnemonic: '"刹避靠双查，冷鸣熄呼救"',
+    flow: '①刹车 → ②避让 → ③靠右 → ④双闪 → ⑤查人 → ⑥冷静 → ⑦鸣笛 → ⑧熄火 → ⑨呼救(112)',
+    phrases: [
+      { ita: 'Frena immediatamente', cn: '紧急刹车', type: '🎧' },
+      { ita: 'Evita l\'ostacolo', cn: '避开障碍物', type: '🎧' },
+      { ita: 'Accosta sulla destra', cn: '靠右停靠', type: '🎧' },
+      { ita: 'Accendi le quattro frecce', cn: '打双闪灯', type: '🎧' },
+      { ita: 'Controlla i pedoni / ciclisti', cn: '注意行人/骑行者', type: '🎧' },
+      { ita: 'Non entrare nell\'incrocio se bloccato', cn: '交叉口拥堵不要进入', type: '🎧' },
+      { ita: 'Mantieni la calma', cn: '保持冷静', type: '🎧' },
+      { ita: 'Usa il clacson se necessario', cn: '必要时鸣喇叭', type: '🎧' },
+      { ita: 'Spegni il motore se in incidente', cn: '事故后熄火', type: '🎧' },
+      { ita: 'Chiama i soccorsi in caso di emergenza', cn: '紧急情况呼叫救援', type: '🎧' },
+    ]
+  },
+  {
+    id: 'modulo11',
+    title: '模块十一：考试收尾',
+    subtitle: 'Fine esame',
+    badge: '中频',
+    badgeClass: 'badge-medium',
+    desc: '回到出发地点后的收尾流程，做不好也会扣分！',
+    phrases: [
+      { ita: 'Torna al punto di partenza', cn: '返回出发点', type: '🎧' },
+      { ita: 'Parcheggia e spegni il motore', cn: '停车并熄火', type: '🎧' },
+      { ita: 'Lascia il veicolo in sicurezza', cn: '安全离开车辆', type: '🎧' },
+      { ita: 'Firma il verbale', cn: '签考试记录', type: '🎧' },
+      { ita: 'Grazie e arrivederci', cn: '感谢并告别', type: '🎧🗣️' },
+    ]
+  }
+];
+
+// ═══════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════
+
+function buildSidebar() {
+  const nav = document.getElementById('sidebarNav');
+  let html = '';
+  MODULES.forEach((mod, idx) => {
+    const star = mod.star ? '<span class="nav-star">⭐</span>' : '';
+    const badgeClass = mod.badgeClass === 'badge-must-know' ? 'must' : '';
+    html += `<a class="nav-module" href="#${mod.id}" data-target="${mod.id}">
+      <span class="nav-badge ${badgeClass}">${idx === 0 ? '〇' : ['一','二','三','四','五','六','七','八','九','十','十一'][idx-1] || idx}</span>
+      ${mod.title.replace(/^模块[^：]+：/, '').replace(/ &.+/, '')}
+      ${star}
+    </a>`;
+  });
+  nav.innerHTML = html;
+
+  const appendixNav = document.getElementById('sidebarAppendix');
+  appendixNav.innerHTML = `
+    <a class="nav-module" href="#appendix1" data-target="appendix1">📚 交通法规</a>
+    <a class="nav-module" href="#appendix2" data-target="appendix2">📋 评分考核点</a>
+    <a class="nav-module" href="#appendix3" data-target="appendix3">🚫 直接挂科清单</a>
+    <a class="nav-module" href="#study-plan" data-target="study-plan">📖 12天学习计划</a>`;
+}
+
+function buildMainContent() {
+  const main = document.getElementById('mainContent');
+  let html = '';
+
+  MODULES.forEach((mod, idx) => {
+    const numLabel = idx === 0 ? '〇' : ['一','二','三','四','五','六','七','八','九','十','十一'][idx-1] || idx;
+    html += `<section class="module-section" id="${mod.id}">`;
+    html += `<div class="module-header">`;
+    html += `<span class="module-num">模块${numLabel}</span>`;
+    html += `<span class="module-title">${mod.title}</span>`;
+    html += `<span class="module-badge ${mod.badgeClass}">${mod.badge}</span>`;
+    html += `</div>`;
+    if (mod.desc) html += `<div class="module-desc">${mod.desc}</div>`;
+
+    if (mod.subSections) {
+      mod.subSections.forEach(sub => {
+        html += `<div class="sub-section-title">${sub.title}</div>`;
+        html += buildPhraseTable(sub.phrases);
+      });
+    } else if (mod.phrases) {
+      html += buildPhraseTable(mod.phrases);
+    }
+
+    if (mod.mnemonic) html += `<div class="tip-box mnemonic"><span class="tip-icon">🎯</span><strong>口诀：</strong>${mod.mnemonic}</div>`;
+    if (mod.flow) {
+      html += `<div class="tip-box info"><span class="tip-icon">🔄</span><strong>标准流程：</strong></div>`;
+      html += `<div class="flow-block">${mod.flow}</div>`;
+    }
+    html += `</section>`;
+  });
+
+  html += renderAppendices();
+  main.innerHTML = html;
+  setTimeout(attachPhraseHandlers, 100);
+}
+
+function buildPhraseTable(phrases) {
+  let html = `<table class="phrase-table"><thead><tr>
+    <th class="col-num">#</th><th class="col-ita">意大利语</th><th class="col-cn">中文</th><th class="col-type">要求</th>
+  </tr></thead><tbody>`;
+  phrases.forEach((p, i) => {
+    html += `<tr class="phrase-row" data-ita="${escapeAttr(p.ita)}">
+      <td class="phrase-num">${i + 1}</td>
+      <td><span class="phrase-ita clickable"><span class="play-icon">🔊</span><span class="spinner"></span>${p.ita}</span></td>
+      <td class="phrase-cn">${p.cn}</td>
+      <td class="phrase-type">${p.type}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>`;
+  return html;
+}
+
+function escapeAttr(s) { return s.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+
+function renderAppendices() {
+  return `
+    <section class="module-section" id="appendix1">
+      <div class="module-header"><span class="module-num">📚</span><span class="module-title">附录一：意大利交通法规核心条款</span></div>
+      <table class="compare-table">
+        <thead><tr><th>法规</th><th>内容</th><th>考试相关</th></tr></thead>
+        <tbody>
+          <tr><td>Codice della Strada Art.36</td><td>禁止阻塞交叉口</td><td>模块十</td></tr>
+          <tr><td>Codice della Strada Art.54</td><td>事故车辆应立即移至安全区域</td><td>模块十</td></tr>
+          <tr><td>Codice della Strada Art.117</td><td>紧急情况可使用喇叭</td><td>模块十</td></tr>
+          <tr><td>Codice della Strada Art.121</td><td>路考需验证车辆控制和安全知识</td><td>模块〇</td></tr>
+          <tr><td>Codice della Strada Art.125</td><td>事故后必须停车、熄火、设警示</td><td>模块十</td></tr>
+          <tr><td>Codice della Strada Art.152-153</td><td>灯光使用规定</td><td>模块九</td></tr>
+          <tr><td>DM 30/11/2010</td><td>路考程序和评分标准</td><td>全部</td></tr>
+          <tr><td>欧盟指令2006/126/CE</td><td>欧盟统一驾驶考试标准</td><td>全部</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="module-section" id="appendix2">
+      <div class="module-header"><span class="module-num">📋</span><span class="module-title">附录二：考试评分表关键考核点</span></div>
+      <table class="compare-table">
+        <thead><tr><th>考核项</th><th>意大利语</th><th>考察内容</th></tr></thead>
+        <tbody>
+          <tr><td>座椅调节</td><td>Regolazione sedile</td><td>前后/高度/倾斜/头枕</td></tr>
+          <tr><td>安全带</td><td>Cinture</td><td>正确佩戴+状态检查</td></tr>
+          <tr><td>后视镜</td><td>Specchi</td><td>正确调节</td></tr>
+          <tr><td>轮胎</td><td>Pneumatici</td><td>胎纹深度、胎压</td></tr>
+          <tr><td>灯光</td><td>Fari e catadiottri</td><td>近光/远光/转向/双闪</td></tr>
+          <tr><td>转向</td><td>Sterzo</td><td>无异常硬度/间隙</td></tr>
+          <tr><td>刹车</td><td>Freni</td><td>踏板行程/液位</td></tr>
+          <tr><td>液位</td><td>Livelli</td><td>机油/刹车油/玻璃水</td></tr>
+          <tr><td>车门</td><td>Porte</td><td>确认关闭</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="module-section" id="appendix3">
+      <div class="module-header"><span class="module-num">🚫</span><span class="module-title">附录三：直接挂科的高危行为清单</span></div>
+      <table class="compare-table">
+        <thead><tr><th>#</th><th>行为</th><th>意大利语</th><th>严重程度</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>闯红灯</td><td>Passare con il rosso</td><td>❌ 直接挂</td></tr>
+          <tr><td>2</td><td>驶入对向车道</td><td>Invadere la corsia opposta</td><td>❌ 直接挂</td></tr>
+          <tr><td>3</td><td>不让行人</td><td>Non dare precedenza ai pedoni</td><td>❌ 直接挂</td></tr>
+          <tr><td>4</td><td>未系安全带</td><td>Non indossare la cintura</td><td>❌ 直接挂</td></tr>
+          <tr><td>5</td><td>碰撞任何物体</td><td>Urtare altri veicoli/ostacoli</td><td>❌ 直接挂</td></tr>
+          <tr><td>6</td><td>教练被迫介入</td><td>Intervento dell'istruttore</td><td>❌ 直接挂</td></tr>
+          <tr><td>7</td><td>严重超速</td><td>Eccesso di velocità grave</td><td>❌ 直接挂</td></tr>
+          <tr><td>8</td><td>不让行</td><td>Mancata precedenza</td><td>❌ 直接挂</td></tr>
+          <tr><td>9</td><td>实线变道</td><td>Cambio corsia su linea continua</td><td>⚠️ 严重扣分</td></tr>
+          <tr><td>10</td><td>不打转向灯</td><td>Mancato uso frecce</td><td>⚠️ 严重扣分</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="module-section" id="study-plan">
+      <div class="module-header"><span class="module-num">📖</span><span class="module-title">学习建议 & 12天打卡计划</span></div>
+      <div class="study-grid">
+        <div class="study-day"><span class="day-num">Day 1</span>模块〇 考官问答<br>🗣️ 必须会说！</div>
+        <div class="study-day"><span class="day-num">Day 2</span>模块一 起步<br>+ 模块十一收尾</div>
+        <div class="study-day"><span class="day-num">Day 3</span>模块二 行驶<br>基本功</div>
+        <div class="study-day"><span class="day-num">Day 4</span>模块三 转弯<br>30米灯+不切弯</div>
+        <div class="study-day"><span class="day-num">Day 5</span>模块四 变道超车<br>镜-镜-盲点</div>
+        <div class="study-day"><span class="day-num">Day 6</span>模块五 环岛 ⭐<br>意大利必考！</div>
+        <div class="study-day"><span class="day-num">Day 7</span>模块六 停车倒车<br>L型和S型</div>
+        <div class="study-day"><span class="day-num">Day 8</span>模块七 坡道起步<br>离合控制</div>
+        <div class="study-day"><span class="day-num">Day 9</span>模块八 高速公路<br>加速+右侧</div>
+        <div class="study-day"><span class="day-num">Day 10</span>模块九 灯光使用<br>各种灯光场景</div>
+        <div class="study-day"><span class="day-num">Day 11</span>模块十 紧急情况<br>事故处理流程</div>
+        <div class="study-day"><span class="day-num">Day 12</span>全模块模拟<br>边做边念指令</div>
+      </div>
+      <div class="tip-box info" style="margin-top:16px">
+        <span class="tip-icon">💡</span><strong>实用技巧：</strong><br>
+        1. 录音跟读：用手机录下自己念意大利语指令的声音，跟原声对比纠正发音<br>
+        2. 模拟驾驶：在安全场地边做动作边念指令，形成肌肉记忆<br>
+        3. 制作闪卡：正面=意大利语，背面=中文+操作要点。每日过一遍<br>
+        4. 环岛特别训练：意大利环岛多，找驾校教练专门练环岛进出<br>
+        5. 语气要自信：考官问你时，大声清楚地回答，不要犹豫
+      </div>
+    </section>`;
+}
+
+function attachPhraseHandlers() {
+  document.querySelectorAll('.phrase-ita.clickable').forEach(el => {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const row = this.closest('.phrase-row');
+      const text = row ? row.dataset.ita : this.textContent.replace(/[🔊]/g, '').trim();
+      if (text) {
+        // Resume audio context on first user interaction
+        initAudioContext();
+        playItalian(text, row);
+      }
+    });
+  });
+}
+
+// ═══════════════════════════════════════
+//  SIDEBAR ACTIVE TRACKING
+// ═══════════════════════════════════════
+
+function updateActiveNav() {
+  const sections = document.querySelectorAll('.module-section');
+  const navLinks = document.querySelectorAll('.nav-module');
+  let currentId = '';
+  sections.forEach(sec => {
+    if (sec.getBoundingClientRect().top <= 160) currentId = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.dataset.target === currentId);
+  });
+}
+
+// ═══════════════════════════════════════
+//  SCROLL TOP BUTTON
+// ═══════════════════════════════════════
+
+const scrollTopBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+  updateActiveNav();
+});
+
+// ═══════════════════════════════════════
+//  KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' || (e.key === ' ' && e.target === document.body)) {
+    e.preventDefault();
+    stopAudio();
+    if (currentRow) currentRow.classList.remove('playing');
+    document.getElementById('playDot').classList.remove('playing');
+    document.getElementById('playStatus').textContent = '已停止';
+    currentRow = null;
+    setTimeout(() => {
+      if (document.getElementById('playStatus').textContent === '已停止') {
+        document.getElementById('playStatus').textContent = '就绪';
+      }
+    }, 1500);
+  }
+  // Number keys 1/2/3 for speed
+  if (e.key === '1') speedBtns[0].click();
+  if (e.key === '2') speedBtns[1].click();
+  if (e.key === '3') speedBtns[2].click();
+});
+
+// ═══════════════════════════════════════
+//  MOBILE NAVIGATION
+// ═══════════════════════════════════════
+
+function buildMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  let html = '';
+  MODULES.forEach((mod, idx) => {
+    const star = mod.star ? '<span class="mni-star">⭐</span>' : '';
+    const badgeClass = mod.badgeClass === 'badge-must-know' ? 'must' : '';
+    html += `<a class="mobile-nav-item" href="#${mod.id}" data-target="${mod.id}">
+      <span class="mni-badge ${badgeClass}">${idx === 0 ? '〇' : ['一','二','三','四','五','六','七','八','九','十','十一'][idx-1] || idx}</span>
+      ${mod.title.replace(/^模块[^：]+：/, '').replace(/ &.+/, '')}
+      ${star}
+    </a>`;
+  });
+  nav.innerHTML = html;
+
+  document.getElementById('mobileAppendix').innerHTML = `
+    <a class="mobile-nav-item" href="#appendix1" data-target="appendix1">📚 交通法规</a>
+    <a class="mobile-nav-item" href="#appendix2" data-target="appendix2">📋 评分考核点</a>
+    <a class="mobile-nav-item" href="#appendix3" data-target="appendix3">🚫 直接挂科清单</a>
+    <a class="mobile-nav-item" href="#study-plan" data-target="study-plan">📖 12天学习计划</a>`;
+}
+
+function setupMobileNav() {
+  const btn = document.getElementById('hamburgerBtn');
+  const overlay = document.getElementById('mobileOverlay');
+  const panel = document.getElementById('mobilePanel');
+
+  function open() {
+    btn.classList.add('open');
+    overlay.classList.add('show');
+    panel.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    btn.classList.remove('open');
+    overlay.classList.remove('show');
+    panel.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', () => {
+    btn.classList.contains('open') ? close() : open();
+  });
+  overlay.addEventListener('click', close);
+
+  // Close on nav item click
+  panel.querySelectorAll('.mobile-nav-item').forEach(link => {
+    link.addEventListener('click', () => {
+      setTimeout(close, 150);
+    });
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) close();
+  });
+}
+
+// ═══════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════
+
+async function init() {
+  buildSidebar();
+  buildMobileNav();
+  buildMainContent();
+  setupMobileNav();
+  // Load audio index in background
+  loadAudioIndex();
+  // Pre-init audio context on first user click
+  document.addEventListener('click', () => initAudioContext(), { once: true });
+}
+
+init();
+
+console.log('🇮🇹 意大利驾照路考口语指令 v3 — base64 JSON 音频 | 浅色主题 | 手机导航');
+console.log('🎙️ 速度: 0.6× / 1.0×(默认) / 1.4× | 快捷键: 1/2/3 切速度, Esc 停止');
+console.log('📁 音频: audio/{hash}.json (lazy load + 内存缓存)');
+</script>
+</body>
+</html>
