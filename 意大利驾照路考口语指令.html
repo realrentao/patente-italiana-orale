@@ -636,9 +636,9 @@ async function playItalian(text, rowElement) {
     const source = ctx.createBufferSource();
     source.buffer = audioBuffer;
     source.playbackRate.value = currentSpeed;
-    // Pitch correction: detune = -1200 * log2(speed) cents
-    // This compensates the pitch shift caused by playbackRate
-    source.detune.value = currentSpeed === 1.0 ? 0 : -1200 * Math.log2(currentSpeed);
+    // Pitch correction via detune (cents): inverse of rate-induced pitch shift
+    // Formula: detune = -1200 * log2(speed), compensates exactly
+    source.detune.value = currentSpeed === 1.0 ? 0 : Math.round(-1200 * Math.log2(currentSpeed));
     source.connect(ctx.destination);
 
     source.onended = () => {
@@ -685,7 +685,7 @@ speedBtns.forEach(btn => {
     // Apply to currently playing audio immediately
     if (currentSource && currentSource.playbackRate) {
       currentSource.playbackRate.value = currentSpeed;
-      currentSource.detune.value = currentSpeed === 1.0 ? 0 : -1200 * Math.log2(currentSpeed);
+      currentSource.detune.value = currentSpeed === 1.0 ? 0 : Math.round(-1200 * Math.log2(currentSpeed));
     }
     showToast('发音速度: ' + btn.textContent.trim());
   });
