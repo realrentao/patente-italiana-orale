@@ -281,35 +281,37 @@ body {
 }
 .phrase-num {
   text-align: center; color: var(--text-dim);
-  font-size: 0.73rem; font-weight: 600;
+  font-size: 0.78rem; font-weight: 600;
+  padding-right: 6px !important;
 }
 .phrase-ita {
-  font-weight: 600; color: var(--text);
-  transition: var(--transition);
-  position: relative;
+  font-weight: 600; color: var(--text); font-size: 1.05rem;
+  transition: var(--transition); position: relative;
 }
 .phrase-ita.clickable {
-  display: inline-block; padding: 5px 10px; margin: -5px -10px;
-  border-radius: 6px; cursor: pointer;
+  display: inline; padding: 0; margin: 0;
+  border-radius: 3px; cursor: pointer;
+  border-bottom: 1.5px dashed transparent;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
 }
-.phrase-ita.clickable:hover { background: var(--green-bg); color: var(--flag-green); }
-.phrase-ita.clickable:active { transform: scale(0.98); }
-
-.phrase-ita .play-icon {
-  display: inline-block; opacity: 0; transition: var(--transition);
-  margin-right: 4px; font-size: 0.72rem; vertical-align: middle;
+.phrase-ita.clickable:hover {
+  background: var(--green-bg); color: var(--flag-green);
+  border-bottom-color: var(--flag-green);
 }
-.phrase-ita.clickable:hover .play-icon,
-.phrase-row.playing .play-icon { opacity: 1; }
-.phrase-row.playing .phrase-ita.clickable { color: var(--flag-green); }
+.phrase-ita.clickable:active { opacity: 0.7; }
+.phrase-row.playing .phrase-ita.clickable {
+  color: var(--flag-green);
+  border-bottom-color: var(--flag-green);
+}
 
-/* Playing spinner overlay */
+/* Loading spinner on phrase */
 .phrase-ita .spinner {
   display: none; width: 14px; height: 14px; border: 2px solid #e5e7eb;
   border-top-color: var(--flag-green); border-radius: 50%;
-  margin-right: 6px; vertical-align: middle; animation: spin 0.6s linear infinite;
+  margin-right: 6px; vertical-align: middle;
+  animation: spin 0.6s linear infinite;
 }
-.phrase-ita.loading .play-icon { display: none; }
+.phrase-ita.loading { opacity: 0.6; }
 .phrase-ita.loading .spinner { display: inline-block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -485,7 +487,7 @@ body {
   .module-title { font-size: 1rem; }
   .phrase-table th, .phrase-table td { padding: 8px 6px; font-size: 0.78rem; }
   .phrase-table th.col-type, .phrase-type { display: none; }
-  .phrase-ita.clickable { padding: 3px 6px; margin: -3px -6px; }
+  .phrase-ita.clickable { padding: 0; margin: 0; display: inline; }
   .flag-title { font-size: 0.9rem; padding: 0 8px; }
   .flag-dots { padding: 0 10px; }
   .flag-dots .fd { width: 7px; height: 7px; }
@@ -846,7 +848,8 @@ const MODULES = [
     mnemonic: '"灯镜盲区三步走，弯道实线绝不变，安全确认再超车，超完记得回原道"',
     flow: '打灯（3秒前）→ 看中央镜 → 看侧镜 → 转头查盲区 → 平稳变道 → 关灯',
     phrases: [
-      { ita: 'Cambia corsia a destra / sinistra', cn: '向右/左变道', type: '🎧' },
+      { ita: 'Cambia corsia a destra', cn: '向右变道', type: '🎧' },
+      { ita: 'Cambia corsia a sinistra', cn: '向左变道', type: '🎧' },
       { ita: 'Controlla gli specchietti prima di cambiare corsia', cn: '变道前看后视镜', type: '🎧' },
       { ita: 'Controlla l\'angolo cieco', cn: '检查盲区', type: '🎧' },
       { ita: 'Usa la freccia prima di cambiare corsia', cn: '变道前打转向灯', type: '🎧' },
@@ -969,7 +972,8 @@ const MODULES = [
       { ita: 'Evita l\'ostacolo', cn: '避开障碍物', type: '🎧' },
       { ita: 'Accosta sulla destra', cn: '靠右停靠', type: '🎧' },
       { ita: 'Accendi le quattro frecce', cn: '打双闪灯', type: '🎧' },
-      { ita: 'Controlla i pedoni / ciclisti', cn: '注意行人/骑行者', type: '🎧' },
+      { ita: 'Controlla i pedoni', cn: '注意行人', type: '🎧' },
+      { ita: 'Controlla i ciclisti', cn: '注意骑行者', type: '🎧' },
       { ita: 'Non entrare nell\'incrocio se bloccato', cn: '交叉口拥堵不要进入', type: '🎧' },
       { ita: 'Mantieni la calma', cn: '保持冷静', type: '🎧' },
       { ita: 'Usa il clacson se necessario', cn: '必要时鸣喇叭', type: '🎧' },
@@ -1063,7 +1067,7 @@ function buildPhraseTable(phrases) {
   phrases.forEach((p, i) => {
     html += `<tr class="phrase-row" data-ita="${escapeAttr(p.ita)}">
       <td class="phrase-num">${i + 1}</td>
-      <td><span class="phrase-ita clickable"><span class="play-icon">🔊</span><span class="spinner"></span>${p.ita}</span></td>
+      <td><span class="phrase-ita clickable"><span class="spinner"></span>${p.ita}</span></td>
       <td class="phrase-cn">${p.cn}</td>
       <td class="phrase-type">${p.type}</td>
     </tr>`;
@@ -1272,9 +1276,7 @@ function setupMobileNav() {
 
   // Close on nav item click
   panel.querySelectorAll('.mobile-nav-item').forEach(link => {
-    link.addEventListener('click', () => {
-      setTimeout(close, 150);
-    });
+    link.addEventListener('click', close);
   });
 
   // Close on Escape
