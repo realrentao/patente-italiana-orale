@@ -601,50 +601,39 @@ async function loadAudio(text) {
   if (!hash) throw new Error('短语未找到对应音频');
   if (audioCache.has(hash)) return audioCache.get(hash);
 
-  const ctx = initAudioContext();
   const resp = await fetch(AUDIO_BASE + hash + '.json');
   if (!resp.ok) throw new Error('音频文件不存在: ' + hash);
   const data = await resp.json();
   if (!data.base64) throw new Error('音频数据为空');
 
-  // Decode base64 to raw MP3 bytes
+  // Decode base64 → Blob → Object URL → Audio element (preserves pitch)
   const binary = atob(data.base64);
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) {
     bytes[i] = binary.charCodeAt(i) & 0xFF;
   }
-  // Create a proper copy of the ArrayBuffer
-  const arrayBuf = bytes.buffer.slice(0);
+  const blob = new Blob([bytes.buffer], { type: 'audio/mpeg' });
+  const url = URL.createObjectURL(blob);
 
-  // Try Web Audio API decode first
-  try {
-    const audioBuffer = await ctx.decodeAudioData(arrayBuf);
-    audioCache.set(hash, audioBuffer);
-    return audioBuffer;
-  } catch(decodeErr) {
-    console.warn('decodeAudioData failed, trying HTMLAudioElement fallback:', decodeErr.message);
-    // Fallback: create blob URL and use Audio element
-    const blob = new Blob([arrayBuf], { type: 'audio/mpeg' });
-    const url = URL.createObjectURL(blob);
-    return new Promise((resolve, reject) => {
-      const audio = new Audio();
-      audio.oncanplaythrough = () => {
-        audioCache.set(hash, audio);
-        resolve(audio);
-      };
-      audio.onerror = () => {
-        URL.revokeObjectURL(url);
-        reject(new Error('音频解码失败'));
-      };
-      audio.src = url;
-      audio.load();
-    });
-  }
+  return new Promise((resolve, reject) => {
+    const audio = new Audio();
+    audio.preload = 'auto';
+    audio.oncanplaythrough = () => {
+      audioCache.set(hash, audio);
+      resolve(audio);
+    };
+    audio.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('音频解码失败'));
+    };
+    audio.src = url;
+    audio.load();
+  });
 }
 
 function stopAudio() {
   if (currentSource) {
-    try { currentSource.stop(); } catch(e) {}
+    try { currentSource.pause(); currentSource.currentTime = 0; } catch(e) {}
     currentSource = null;
   }
 }
@@ -659,39 +648,22 @@ async function playItalian(text, rowElement) {
   document.getElementById('playStatus').textContent = '加载中...';
 
   try {
-    const audioData = await loadAudio(text);
+    const audio = await loadAudio(text);
     if (itaEl) itaEl.classList.remove('loading');
 
-    // audioData can be AudioBuffer (Web Audio API) or HTMLAudioElement (fallback)
-    if (audioData instanceof AudioBuffer) {
-      const ctx = initAudioContext();
-      const source = ctx.createBufferSource();
-      source.buffer = audioData;
-      source.playbackRate.value = currentSpeed;
-      source.connect(ctx.destination);
-      currentSource = source;
-      source.onended = finishPlayback;
-      source.start(0);
-    } else if (audioData instanceof HTMLAudioElement) {
-      audioData.playbackRate = currentSpeed;
-      audioData.onended = finishPlayback;
-      audioData.onerror = () => {
-        finishPlayback();
-        showToast('⚠️ 播放失败');
-      };
-      audioData.play().catch(e => {
-        finishPlayback();
-        showToast('⚠️ 播放被阻止，请先点击页面任意位置');
-      });
-      currentSource = audioData;
-      return; // finishPlayback will be called by onended
-    }
+    audio.playbackRate = currentSpeed;
+    audio.preservesPitch = true;
 
+    audio.onended = finishPlayback;
+    audio.onerror = () => { finishPlayback(); showToast('⚠️ 播放失败'); };
+    
+    currentSource = audio;
     if (rowElement) {
       currentRow = rowElement;
       rowElement.classList.add('playing');
     }
     document.getElementById('playStatus').textContent = '播放中...';
+    await audio.play();
 
   } catch(e) {
     console.error('Audio error:', e);
@@ -704,6 +676,9 @@ async function playItalian(text, rowElement) {
     if (itaEl) itaEl.classList.remove('loading');
     document.getElementById('playDot').classList.remove('playing');
     document.getElementById('playStatus').textContent = '就绪';
+    if (currentSource) {
+      try { currentSource.pause(); currentSource.currentTime = 0; } catch(e) {}
+    }
     currentSource = null;
     currentRow = null;
   }
