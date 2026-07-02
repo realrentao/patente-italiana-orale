@@ -551,9 +551,9 @@ body {
 <!-- Speed Bar -->
 <div class="speed-bar" id="speedBar">
   <span class="speed-label">🎙️ 发音速度</span>
-  <button class="speed-btn" data-speed="0.6">🐢 0.6×</button>
+  <button class="speed-btn" data-speed="0.7">🐢 0.7×</button>
   <button class="speed-btn active" data-speed="1.0">🚶 1.0×</button>
-  <button class="speed-btn" data-speed="1.4">🐇 1.4×</button>
+  <button class="speed-btn" data-speed="1.3">🐇 1.3×</button>
   <span class="speed-status">
     <span class="speed-dot" id="playDot"></span>
     <span id="playStatus">就绪</span>
@@ -755,50 +755,65 @@ const MODULES = [
           { ita: 'Controlla la chiusura delle porte', cn: '检查车门是否关好', type: '🎧' },
           { ita: 'Allaccia la cintura di sicurezza', cn: '系好安全带', type: '🎧' },
           { ita: 'Consegna i documenti', cn: '提交证件', type: '🎧' },
+          { ita: 'Ecco i miei documenti', cn: '（可说）这是我的证件', type: '📝' },
         ]
       },
       {
         title: '二、考官高频问题 — 轮胎',
         phrases: [
           { ita: 'Come si controlla lo spessore del battistrada?', cn: '如何检查胎面厚度？', type: '🎧🗣️' },
+          { ita: 'Si controlla attraverso i testimoni di usura. Lo spessore minimo legale è 1,6 mm.', cn: '通过磨损指示器检查，法定最小厚度1.6mm', type: '📝' },
           { ita: 'Qual è la pressione corretta degli pneumatici?', cn: '正确的胎压是多少？', type: '🎧🗣️' },
+          { ita: 'La pressione consigliata si trova sul libretto di circolazione o sull\'adesivo vicino alla portiera.', cn: '建议胎压见行驶证或车门旁标签', type: '📝' },
           { ita: 'Come si controlla la pressione di gonfiaggio?', cn: '怎么检查胎压？', type: '🎧🗣️' },
+          { ita: 'Si controlla a pneumatici freddi con un manometro.', cn: '冷胎时用胎压计检查', type: '📝' },
         ]
       },
       {
         title: '二、考官高频问题 — 机油',
         phrases: [
           { ita: 'Come si controlla il livello dell\'olio motore?', cn: '怎么检查机油油位？', type: '🎧🗣️' },
+          { ita: 'Si controlla con l\'astina di livello, a motore freddo e su terreno pianeggiante.', cn: '冷车平地用油尺检查，油位在min-max之间', type: '📝' },
         ]
       },
       {
         title: '二、考官高频问题 — 刹车',
         phrases: [
           { ita: 'Come si controlla il freno a mano?', cn: '怎么检查手刹？', type: '🎧🗣️' },
+          { ita: 'Si tira la leva e si verifica che il veicolo rimanga fermo.', cn: '拉手刹确认车辆停稳，手刹杆不应拉到极限', type: '📝' },
           { ita: 'Come si verifica il liquido dei freni?', cn: '怎么检查刹车油？', type: '🎧🗣️' },
+          { ita: 'Si controlla il livello del liquido freni nel serbatoio sotto il cofano.', cn: '打开引擎盖检查刹车油壶液位', type: '📝' },
         ]
       },
       {
         title: '二、考官高频问题 — 灯光',
         phrases: [
           { ita: 'Come si accendono i fari anabbaglianti?', cn: '如何打开近光灯？', type: '🎧🗣️' },
+          { ita: 'Girando la manopola sul volante fino al simbolo degli anabbaglianti.', cn: '旋转方向盘旁旋钮至近光灯符号', type: '📝' },
           { ita: 'Come si accendono gli abbaglianti?', cn: '如何打开远光灯？', type: '🎧🗣️' },
+          { ita: 'Spingendo in avanti la leva di sinistra. Sul cruscotto appare la spia blu.', cn: '前推左手拨杆，仪表盘亮蓝色指示灯', type: '📝' },
           { ita: 'Cosa indica la spia rossa sul cruscotto?', cn: '仪表盘红色指示灯？', type: '🎧🗣️' },
+          { ita: 'Una spia rossa indica un pericolo o un guasto grave, bisogna fermarsi immediatamente.', cn: '红色灯=严重故障/危险，必须立即停车', type: '📝' },
           { ita: 'Come si attivano le quattro frecce?', cn: '如何开启双闪？', type: '🎧' },
+          { ita: 'Premendo il pulsante rosso con il triangolo sul cruscotto.', cn: '按下仪表盘红色三角按钮', type: '📝' },
         ]
       },
       {
         title: '二、考官高频问题 — 雨刷 & 液位',
         phrases: [
           { ita: 'Come si attivano i tergicristalli?', cn: '怎么开启雨刷？', type: '🎧' },
+          { ita: 'Con la leva di destra sul volante, si può regolare la velocità.', cn: '用右手拨杆操作，可调速度', type: '📝' },
           { ita: 'Come si controlla il liquido lavavetri?', cn: '怎么检查玻璃水？', type: '🎧' },
+          { ita: 'Si controlla il serbatoio del liquido lavavetri sotto il cofano.', cn: '打开引擎盖检查玻璃水壶', type: '📝' },
         ]
       },
       {
         title: '二、考官高频问题 — 文件',
         phrases: [
           { ita: 'Quali documenti bisogna portare per guidare?', cn: '开车需要带哪些证件？', type: '🎧🗣️' },
+          { ita: 'Patente di guida, carta di circolazione e certificato di assicurazione.', cn: '驾照+行驶证+保险凭证', type: '📝' },
           { ita: 'Dove si trova il triangolo di emergenza?', cn: '三角警示牌在哪里？', type: '🎧' },
+          { ita: 'Nel bagagliaio. Va posizionato ad almeno 50 metri dietro il veicolo.', cn: '在后备箱，应放在车后至少50米处', type: '📝' },
         ]
       }
     ]
@@ -1329,7 +1344,7 @@ async function init() {
 init();
 
 console.log('🇮🇹 意大利驾照路考口语指令 v3 — base64 JSON 音频 | 浅色主题 | 手机导航');
-console.log('🎙️ 速度: 0.6× / 1.0×(默认) / 1.4× | 快捷键: 1/2/3 切速度, Esc 停止');
+console.log('🎙️ 速度: 0.7× / 1.0×(默认) / 1.3× | 快捷键: 1/2/3 切速度, Esc 停止');
 console.log('📁 音频: audio/{hash}.json (lazy load + 内存缓存)');
 </script>
 </body>
