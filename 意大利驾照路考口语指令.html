@@ -139,37 +139,10 @@ body {
 .nav-badge.must { background: var(--red-bg); color: var(--flag-red); }
 .nav-star { color: var(--gold); font-size: 0.75rem; margin-left: auto; }
 
-/* ═══ SPEED BAR ═══ */
-.speed-bar {
-  position: fixed; top: 56px; left: 250px; right: 0;
-  height: 46px;
-  background: #fff;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 12px;
-  padding: 0 24px;
-  z-index: 98;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-}
-.speed-label {
-  font-size: 0.78rem; color: var(--text-dim);
-  font-weight: 600; flex-shrink: 0;
-}
-.speed-btn {
-  padding: 5px 16px; border: 1.5px solid var(--border-strong);
-  border-radius: 20px; background: #fff;
-  color: var(--text-accent);
-  font-size: 0.78rem; font-weight: 600;
-  cursor: pointer; transition: var(--transition);
-  user-select: none;
-}
-.speed-btn:hover { border-color: var(--flag-green); color: var(--flag-green); background: var(--green-bg); }
-.speed-btn.active {
-  background: var(--flag-green); border-color: var(--flag-green);
-  color: #fff; box-shadow: 0 2px 8px rgba(0,146,70,0.3);
-}
-.speed-status {
-  margin-left: auto; font-size: 0.74rem; color: var(--text-dim);
-  display: flex; align-items: center; gap: 6px;
+/* ═══ PLAY INDICATOR ═══ */
+.play-indicator {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 0 20px; font-size: 0.82rem; color: var(--text-dim);
 }
 .speed-dot {
   width: 8px; height: 8px; border-radius: 50%;
@@ -183,7 +156,7 @@ body {
 
 /* ═══ MAIN CONTENT ═══ */
 .main-content {
-  margin-left: 250px; margin-top: 102px;
+  margin-left: 250px; margin-top: 62px;
   padding: 28px 32px 60px;
   max-width: 960px; width: 100%;
 }
@@ -470,11 +443,8 @@ body {
   .mobile-nav-overlay { display: block; pointer-events: none; }
   .mobile-nav-overlay.show { pointer-events: auto; }
   .mobile-nav-panel { display: block; }
-  .speed-bar { left: 0; flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 6px; }
-  .speed-label { font-size: 0.72rem; }
-  .speed-btn { padding: 4px 10px; font-size: 0.7rem; }
-  .speed-status { font-size: 0.68rem; }
-  .main-content { margin-left: 0; margin-top: 98px; padding: 12px 8px 60px; }
+  .main-content { margin-left: 0; margin-top: 60px; padding: 12px 8px 60px; }
+  .play-indicator { padding: 6px 0 12px; font-size: 0.75rem; }
   .module-section { padding: 14px; border-radius: 8px; scroll-margin-top: 130px; }
   .module-header { flex-wrap: wrap; }
   .module-title { font-size: 1rem; }
@@ -540,18 +510,6 @@ body {
   <nav id="sidebarAppendix"></nav>
 </aside>
 
-<!-- Speed Bar -->
-<div class="speed-bar" id="speedBar">
-  <span class="speed-label">🎙️ 发音速度</span>
-  <button class="speed-btn" data-speed="0.7">🐢 0.7×</button>
-  <button class="speed-btn active" data-speed="1.0">🚶 1.0×</button>
-  <button class="speed-btn" data-speed="1.3">🐇 1.3×</button>
-  <span class="speed-status">
-    <span class="speed-dot" id="playDot"></span>
-    <span id="playStatus">就绪</span>
-  </span>
-</div>
-
 <!-- Main Content -->
 <main class="main-content" id="mainContent"></main>
 
@@ -565,7 +523,6 @@ body {
 
 const AUDIO_BASE = 'audio/';
 let audioCache = new Map();
-let currentSpeed = 1.0;
 let currentSource = null;
 let currentRow = null;
 let audioCtx = null;
@@ -635,17 +592,13 @@ async function playItalian(text, rowElement) {
     const ctx = getCtx();
     const source = ctx.createBufferSource();
     source.buffer = audioBuffer;
-    source.playbackRate.value = currentSpeed;
-    // Pitch correction via detune (cents): inverse of rate-induced pitch shift
-    // Formula: detune = -1200 * log2(speed), compensates exactly
-    source.detune.value = currentSpeed === 1.0 ? 0 : Math.round(-1200 * Math.log2(currentSpeed));
     source.connect(ctx.destination);
 
     source.onended = () => {
       if (rowElement) rowElement.classList.remove('playing');
       if (itaEl) itaEl.classList.remove('loading');
       document.getElementById('playDot').classList.remove('playing');
-      document.getElementById('playStatus').textContent = '就绪';
+      document.getElementById('playStatus').textContent = '点击意大利语发音';
       currentSource = null;
       currentRow = null;
     };
@@ -674,22 +627,7 @@ async function playItalian(text, rowElement) {
 //  SPEED CONTROL
 // ═══════════════════════════════════════
 
-const speedBtns = document.querySelectorAll('.speed-btn');
 const toast = document.getElementById('toast');
-
-speedBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    speedBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentSpeed = parseFloat(btn.dataset.speed);
-    // Apply to currently playing audio immediately
-    if (currentSource && currentSource.playbackRate) {
-      currentSource.playbackRate.value = currentSpeed;
-      currentSource.detune.value = currentSpeed === 1.0 ? 0 : Math.round(-1200 * Math.log2(currentSpeed));
-    }
-    showToast('发音速度: ' + btn.textContent.trim());
-  });
-});
 
 function showToast(msg) {
   toast.textContent = msg;
@@ -1065,7 +1003,7 @@ function buildMainContent() {
   });
 
   html += renderAppendices();
-  main.innerHTML = html;
+  main.innerHTML = '<div class="play-indicator" id="playIndicator"><span class="speed-dot" id="playDot"></span><span id="playStatus">点击意大利语发音</span></div>' + html;
   setTimeout(attachPhraseHandlers, 100);
 }
 
@@ -1226,9 +1164,6 @@ document.addEventListener('keydown', (e) => {
     stopAudio();
     finishPlaybackUI();
   }
-  if (e.key === '1') speedBtns[0].click();
-  if (e.key === '2') speedBtns[1].click();
-  if (e.key === '3') speedBtns[2].click();
 });
 
 function finishPlaybackUI() {
@@ -1238,7 +1173,7 @@ function finishPlaybackUI() {
   currentRow = null;
   setTimeout(() => {
     if (document.getElementById('playStatus').textContent === '已停止') {
-      document.getElementById('playStatus').textContent = '就绪';
+      document.getElementById('playStatus').textContent = '点击意大利语发音';
     }
   }, 1500);
 }
@@ -1317,8 +1252,8 @@ async function init() {
 
 init();
 
-console.log('🇮🇹 意大利驾照路考口语指令 v3 — base64 JSON 音频 | 浅色主题 | 手机导航');
-console.log('🎙️ 速度: 0.7× / 1.0×(默认) / 1.3× | 快捷键: 1/2/3 切速度, Esc 停止');
+console.log('🇮🇹 意大利驾照路考口语指令 — base64 JSON 音频 | 浅色主题 | 手机导航');
+console.log('🎙️ 点击意大利语文本发音 | Esc/空格 停止播放');
 console.log('📁 音频: audio/{hash}.json (lazy load + 内存缓存)');
 </script>
 </body>
