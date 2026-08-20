@@ -1284,696 +1284,8 @@ function showToast(msg) {
 
 const MODULES = [
   {
-    "id": "modulo2",
-    "title": "模块〇：行驶",
-    "subtitle": "Guida / Circolazione",
-    "badge": "高频",
-    "badgeClass": "badge-high",
-    "desc": "正常行驶过程中的指令，考察基本驾驶素养和安全意识。",
-    "mnemonic": "\"速度适当不猛加，该慢就慢距两秒，三镜全看过盲区，车道标线守到底\"",
-    "phrases": [
-      {
-        "ita": "Mantieni la velocità corretta",
-        "cn": "保持正确速度",
-        "type": "🎧"
-      },
-      {
-        "ita": "Accelera dolcemente",
-        "cn": "轻踩油门加速",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rallenta quando serve",
-        "cn": "需要时减速",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni la distanza di sicurezza",
-        "cn": "保持安全距离",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla lo specchietto retrovisore centrale",
-        "cn": "看中间后视镜",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla gli specchietti laterali",
-        "cn": "看左右后视镜",
-        "type": "🎧"
-      },
-      {
-        "ita": "Guarda avanti",
-        "cn": "注意前方",
-        "type": "🎧"
-      },
-      {
-        "ita": "Segui la segnaletica",
-        "cn": "遵守交通标线",
-        "type": "🎧"
-      },
-      {
-        "ita": "Stai nella tua corsia",
-        "cn": "保持车道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa correttamente gli indicatori",
-        "cn": "正确使用转向灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla lo stato del traffico",
-        "cn": "注意周围车辆",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rispetta il limite di 50 km/h in città",
-        "cn": "市区限速 50 公里/小时",
-        "type": "🎧"
-      },
-      {
-        "ita": "Dai la precedenza ai veicoli provenienti da destra",
-        "cn": "让右侧来车先行",
-        "type": "🎧"
-      },
-      {
-        "ita": "Cedi la precedenza ai pedoni sulle strisce",
-        "cn": "让斑马线上的行人",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fermati allo stop e riparti quando è libero",
-        "cn": "停止标志前停稳后再起步",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rispetta il semaforo rosso",
-        "cn": "遵守红灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni la distanza di sicurezza di 1 secondo in città",
-        "cn": "市区保持 1 秒安全距离",
-        "type": "🎧"
-      },
-      {
-        "ita": "Guida in modo fluido ed ecologico",
-        "cn": "平稳、经济地驾驶",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rallenta in prossimità delle scuole",
-        "cn": "学校附近减速",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla gli specchietti a ogni cambiamento di direzione",
-        "cn": "每次改变方向都看后视镜",
-        "type": "🎧"
-      }
-    ]
-  },
-  {
-    "id": "modulo1",
-    "title": "模块一：起步",
-    "subtitle": "Partenza / Avvio",
-    "badge": "高频",
-    "badgeClass": "badge-high",
-    "desc": "考官的起步指令，听到后立即执行。",
-    "mnemonic": "\"一发动，二看镜，三系带，四踩板，五挂档，六观前，七左右，八缓行，九打灯\"",
-    "phrases": [
-      {
-        "ita": "Accendi il motore",
-        "cn": "发动引擎",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla gli specchietti prima di partire",
-        "cn": "起步前检查后视镜",
-        "type": "🎧"
-      },
-      {
-        "ita": "Metti la cintura di sicurezza",
-        "cn": "系好安全带",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla i pedali",
-        "cn": "检查踏板",
-        "type": "🎧"
-      },
-      {
-        "ita": "Metti la prima marcia",
-        "cn": "挂入一档",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla la strada davanti e dietro",
-        "cn": "观察前方及后方",
-        "type": "🎧"
-      },
-      {
-        "ita": "Guarda a destra e sinistra",
-        "cn": "左右观察",
-        "type": "🎧"
-      },
-      {
-        "ita": "Riparti con cautela",
-        "cn": "小心起步",
-        "type": "🎧"
-      },
-      {
-        "ita": "Segnala con la freccia se necessario",
-        "cn": "如有需要，打转向灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Sblocca il volante",
-        "cn": "解锁方向盘（转向锁）",
-        "type": "🎧"
-      },
-      {
-        "ita": "Inserisci la chiave o premi il pulsante di avviamento",
-        "cn": "插入钥匙或按启动按钮",
-        "type": "🎧"
-      },
-      {
-        "ita": "Togli il freno a mano",
-        "cn": "松开手刹",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla le spie sul cruscotto",
-        "cn": "检查仪表盘指示灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Imbraya (premi la frizione)",
-        "cn": "踩下离合器",
-        "type": "🎧"
-      },
-      {
-        "ita": "Metti la seconda marcia",
-        "cn": "挂入二档",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni il piede sul freno",
-        "cn": "脚踩刹车（待发状态）",
-        "type": "🎧"
-      },
-      {
-        "ita": "Guarda negli specchietti e dai la precedenza",
-        "cn": "看后视镜并让行",
-        "type": "🎧"
-      }
-    ]
-  },
-  {
-    "id": "modulo3",
-    "title": "模块二：转弯",
-    "subtitle": "Svolta / Curva",
-    "badge": "高频",
-    "badgeClass": "badge-high",
-    "desc": "转弯指令是路考中的高频考点，考官重点观察你的观察习惯和操作规范性。",
-    "mnemonic": "\"左右转弯先减速，三十米前灯亮起，看镜看人看标志，不压线来不切弯\"",
-    "phrases": [
-      {
-        "ita": "Svolta a destra",
-        "cn": "右转",
-        "type": "🎧"
-      },
-      {
-        "ita": "Svolta a sinistra",
-        "cn": "左转",
-        "type": "🎧"
-      },
-      {
-        "ita": "Riduci la velocità prima della curva",
-        "cn": "转弯前减速",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla gli specchietti prima di girare",
-        "cn": "转弯前看后视镜",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa la freccia almeno 30 metri prima",
-        "cn": "提前30米打转向灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non tagliare la curva",
-        "cn": "不切弯/不压弯道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni la corsia durante la curva",
-        "cn": "转弯保持车道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla eventuali pedoni",
-        "cn": "注意行人",
-        "type": "🎧"
-      },
-      {
-        "ita": "Guarda la segnaletica verticale",
-        "cn": "注意交通标志",
-        "type": "🎧"
-      },
-      {
-        "ita": "Guarda eventuali veicoli provenienti dall'altra corsia",
-        "cn": "注意对向车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Segnala in anticipo con la freccia",
-        "cn": "提前打转向灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Dai la precedenza durante la svolta",
-        "cn": "转弯时让行",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non invadere la corsia opposta",
-        "cn": "不侵占对向车道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rallenta e scala marcia prima di girare",
-        "cn": "转弯前减速并降档",
-        "type": "🎧"
-      },
-      {
-        "ita": "Osserva pedoni e ciclisti prima di svoltare",
-        "cn": "转弯前留意行人和骑行者",
-        "type": "🎧"
-      }
-    ]
-  },
-  {
-    "id": "modulo6",
-    "title": "模块三：停车 & 倒车",
-    "subtitle": "Parcheggio / Retromarcia",
-    "badge": "高频",
-    "badgeClass": "badge-high",
-    "desc": "停车操作包括L型停车、S型停车、平行停车、倒车等。",
-    "mnemonic": "\"一灯二镜三观察，慢倒转头看后方；L看灯S看半窗，停稳拉刹距半米\"",
-    "phrases": [
-      {
-        "ita": "Parcheggia parallelamente al marciapiede",
-        "cn": "平行停车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fai un parcheggio a L",
-        "cn": "L型停车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fai un parcheggio a S",
-        "cn": "S型停车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fai retromarcia lentamente",
-        "cn": "慢慢倒车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla gli specchietti durante il parcheggio",
-        "cn": "停车时看后视镜",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa la freccia quando parcheggi",
-        "cn": "停车前打转向灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni la distanza dal marciapiede",
-        "cn": "与人行道保持距离",
-        "type": "🎧"
-      },
-      {
-        "ita": "Ferma il veicolo completamente",
-        "cn": "完全停车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Tieni il freno a mano inserito",
-        "cn": "拉紧手刹",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla lo spazio dietro",
-        "cn": "检查车后空间",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non urtare altri veicoli",
-        "cn": "不碰其他车辆",
-        "type": "🎧"
-      },
-      {
-        "ita": "Inserisci la retromarcia",
-        "cn": "挂倒档",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fai un parcheggio in retromarcia a L",
-        "cn": "L 型倒车入库",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fai un parcheggio in retromarcia a S",
-        "cn": "S 型倒车入库",
-        "type": "🎧"
-      },
-      {
-        "ita": "Esci dal parcheggio in sicurezza",
-        "cn": "安全驶出车位",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fai retromarcia in linea retta per 30 metri",
-        "cn": "直线倒车约 30 米",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fai un'inversione di marcia (manovra a U)",
-        "cn": "掉头（U 型转弯）",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla gli angoli ciechi durante la retromarcia",
-        "cn": "倒车过程中检查盲区",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa lo specchietto destro per il parcheggio a destra",
-        "cn": "右侧停车时用右后视镜",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni il veicolo a non più di 50 cm dal marciapiede",
-        "cn": "车辆距路缘不超过 50 厘米",
-        "type": "🎧"
-      },
-      {
-        "ita": "Ferma tra le linee di delimitazione",
-        "cn": "停在标线范围内",
-        "type": "🎧"
-      }
-    ]
-  },
-  {
-    "id": "modulo4",
-    "title": "模块四：变道 & 超车",
-    "subtitle": "Cambio corsia / Sorpasso",
-    "badge": "高频",
-    "badgeClass": "badge-high",
-    "desc": "变道和超车是路考中风险最高的操作。",
-    "mnemonic": "\"灯镜盲区三步走，弯道实线绝不变，安全确认再超车，超完记得回原道\"",
-    "flow": "打灯（3秒前）→ 看中央镜 → 看侧镜 → 转头查盲区 → 平稳变道 → 关灯",
-    "phrases": [
-      {
-        "ita": "Cambia corsia a destra",
-        "cn": "向右变道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Cambia corsia a sinistra",
-        "cn": "向左变道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla gli specchietti prima di cambiare corsia",
-        "cn": "变道前看后视镜",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla l'angolo cieco",
-        "cn": "检查盲区",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa la freccia prima di cambiare corsia",
-        "cn": "变道前打转向灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non cambiare corsia in curva",
-        "cn": "弯道内不要变道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non cambiare corsia su linea continua",
-        "cn": "实线不要变道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Sorpassa solo se sicuro",
-        "cn": "确认安全再超车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla il traffico dietro",
-        "cn": "查看后方车辆",
-        "type": "🎧"
-      },
-      {
-        "ita": "Tornare nella corsia iniziale se necessario",
-        "cn": "必要时回原车道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Segnala la manovra con la freccia",
-        "cn": "打灯示意变道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rientra a destra dopo il sorpasso",
-        "cn": "超车后回右侧车道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non sorpassare in curva o in cresta",
-        "cn": "弯道或坡顶禁止超车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni distanza laterale dai ciclisti (minimo 1,5 m)",
-        "cn": "与骑行者保持横向距离（至少 1.5 米）",
-        "type": "🎧"
-      },
-      {
-        "ita": "Valuta lo spazio disponibile prima di sorpassare",
-        "cn": "超车前评估可用空间",
-        "type": "🎧"
-      }
-    ]
-  },
-  {
-    "id": "modulo5",
-    "title": "模块五：环岛",
-    "subtitle": "Rotatoria",
-    "badge": "必考！",
-    "badgeClass": "badge-must-know",
-    "desc": "<strong>⚠️ 最高频考点！</strong> 意大利以环岛多著称，几乎所有路考都会经过环岛。",
-    "star": true,
-    "mnemonic": "\"一出口右灯外道出，二出口无灯过一打，三出口左灯内道走，出环打右不忘后\"",
-    "phrases": [
-      {
-        "ita": "Entra nella rotonda",
-        "cn": "进入环岛",
-        "type": "🎧"
-      },
-      {
-        "ita": "Prendi la prima uscita",
-        "cn": "第一个出口驶出",
-        "type": "🎧"
-      },
-      {
-        "ita": "Prendi la seconda uscita",
-        "cn": "第二个出口驶出",
-        "type": "🎧"
-      },
-      {
-        "ita": "Prendi la terza uscita",
-        "cn": "第三个及之后出口驶出",
-        "type": "🎧"
-      },
-      {
-        "ita": "Dai la precedenza a chi è dentro la rotonda",
-        "cn": "让行环岛内车辆",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non fermarti dentro la rotonda",
-        "cn": "不要在环岛内停车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Segnala l'uscita dalla rotonda",
-        "cn": "驶出环岛时打右灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni la corsia nella rotonda",
-        "cn": "在环岛内保持车道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rallenta in prossimità della rotonda",
-        "cn": "接近环岛时减速",
-        "type": "🎧"
-      },
-      {
-        "ita": "Segnala l'immissione se cambi corsia",
-        "cn": "变道进入环岛时打灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Conta le uscite per non sbagliare",
-        "cn": "数出口避免走错",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non superare all'interno della rotonda",
-        "cn": "环岛内不超车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa la freccia destra per uscire",
-        "cn": "驶出时打右灯",
-        "type": "🎧"
-      }
-    ]
-  },
-  {
-    "id": "modulo9",
-    "title": "模块六：灯光使用",
-    "subtitle": "Uso luci",
-    "badge": "高频",
-    "badgeClass": "badge-high",
-    "desc": "考官会在路考中让你演示各种灯光操作。意大利对灯光使用有严格规定。",
-    "phrases": [
-      {
-        "ita": "Accendi i fari anabbaglianti",
-        "cn": "打开近光灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Accendi gli abbaglianti",
-        "cn": "打开远光灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Spegni gli abbaglianti",
-        "cn": "关掉远光灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Accendi le luci di posizione",
-        "cn": "打开示宽灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Accendi i fendinebbia anteriori",
-        "cn": "打开前雾灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Accendi i retronebbia",
-        "cn": "打开后雾灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa le luci in galleria",
-        "cn": "隧道内开灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Verifica il funzionamento delle frecce",
-        "cn": "检查转向灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Accendi le luci di notte nei centri abitati",
-        "cn": "居民区夜间开启车灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa gli abbaglianti fuori dai centri abitati",
-        "cn": "非居民区使用远光灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Abbassa gli abbaglianti in presenza di altri veicoli",
-        "cn": "会车时切换为近光灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa i fendinebbia solo con visibilità inferiore a 50 m",
-        "cn": "能见度低于 50 米才用雾灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Verifica che tutte le luci funzionino",
-        "cn": "检查所有灯光是否正常",
-        "type": "🎧"
-      }
-    ]
-  },
-  {
-    "id": "modulo13",
-    "title": "模块七：行人、骑行者与弱势使用者",
-    "subtitle": "Pedoni, Ciclisti & Utenti deboli",
-    "badge": "高频",
-    "badgeClass": "badge-high",
-    "desc": "意大利路考对<strong>弱势道路使用者</strong>（行人、儿童、骑行者、公交车）保护极为严格，未让行可直接挂科。",
-    "phrases": [
-      {
-        "ita": "Dai la precedenza ai pedoni",
-        "cn": "给行人让行",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fermati per far attraversare i bambini",
-        "cn": "停车让孩子通过",
-        "type": "🎧"
-      },
-      {
-        "ita": "Lasci spazio ai ciclisti (minimo 1,5 m)",
-        "cn": "给骑行者留出空间（至少 1.5 米）",
-        "type": "🎧"
-      },
-      {
-        "ita": "Controlla i ciclisti prima di aprire la portiera",
-        "cn": "开车门前留意骑行者",
-        "type": "🎧"
-      },
-      {
-        "ita": "Dai la precedenza agli autobus in partenza",
-        "cn": "给起步的公交车让行",
-        "type": "🎧"
-      },
-      {
-        "ita": "Fai attenzione agli utenti deboli sulla carreggiata",
-        "cn": "注意路面上的弱势使用者",
-        "type": "🎧"
-      }
-    ]
-  },
-  {
     "id": "modulo0",
-    "title": "模块八：考前准备 & 考官问答",
+    "title": "模块〇：考前准备 & 考官问答",
     "subtitle": "Preparazione & Domande Esaminatore",
     "badge": "必考！",
     "badgeClass": "badge-must-know",
@@ -2268,8 +1580,465 @@ const MODULES = [
     ]
   },
   {
+    "id": "modulo1",
+    "title": "模块一：起步",
+    "subtitle": "Partenza / Avvio",
+    "badge": "高频",
+    "badgeClass": "badge-high",
+    "desc": "考官的起步指令，听到后立即执行。",
+    "mnemonic": "\"一发动，二看镜，三系带，四踩板，五挂档，六观前，七左右，八缓行，九打灯\"",
+    "phrases": [
+      {
+        "ita": "Accendi il motore",
+        "cn": "发动引擎",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla gli specchietti prima di partire",
+        "cn": "起步前检查后视镜",
+        "type": "🎧"
+      },
+      {
+        "ita": "Metti la cintura di sicurezza",
+        "cn": "系好安全带",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla i pedali",
+        "cn": "检查踏板",
+        "type": "🎧"
+      },
+      {
+        "ita": "Metti la prima marcia",
+        "cn": "挂入一档",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla la strada davanti e dietro",
+        "cn": "观察前方及后方",
+        "type": "🎧"
+      },
+      {
+        "ita": "Guarda a destra e sinistra",
+        "cn": "左右观察",
+        "type": "🎧"
+      },
+      {
+        "ita": "Riparti con cautela",
+        "cn": "小心起步",
+        "type": "🎧"
+      },
+      {
+        "ita": "Segnala con la freccia se necessario",
+        "cn": "如有需要，打转向灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Sblocca il volante",
+        "cn": "解锁方向盘（转向锁）",
+        "type": "🎧"
+      },
+      {
+        "ita": "Inserisci la chiave o premi il pulsante di avviamento",
+        "cn": "插入钥匙或按启动按钮",
+        "type": "🎧"
+      },
+      {
+        "ita": "Togli il freno a mano",
+        "cn": "松开手刹",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla le spie sul cruscotto",
+        "cn": "检查仪表盘指示灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Imbraya (premi la frizione)",
+        "cn": "踩下离合器",
+        "type": "🎧"
+      },
+      {
+        "ita": "Metti la seconda marcia",
+        "cn": "挂入二档",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni il piede sul freno",
+        "cn": "脚踩刹车（待发状态）",
+        "type": "🎧"
+      },
+      {
+        "ita": "Guarda negli specchietti e dai la precedenza",
+        "cn": "看后视镜并让行",
+        "type": "🎧"
+      }
+    ]
+  },
+  {
+    "id": "modulo2",
+    "title": "模块二：行驶",
+    "subtitle": "Guida / Circolazione",
+    "badge": "高频",
+    "badgeClass": "badge-high",
+    "desc": "正常行驶过程中的指令，考察基本驾驶素养和安全意识。",
+    "mnemonic": "\"速度适当不猛加，该慢就慢距两秒，三镜全看过盲区，车道标线守到底\"",
+    "phrases": [
+      {
+        "ita": "Mantieni la velocità corretta",
+        "cn": "保持正确速度",
+        "type": "🎧"
+      },
+      {
+        "ita": "Accelera dolcemente",
+        "cn": "轻踩油门加速",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rallenta quando serve",
+        "cn": "需要时减速",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni la distanza di sicurezza",
+        "cn": "保持安全距离",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla lo specchietto retrovisore centrale",
+        "cn": "看中间后视镜",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla gli specchietti laterali",
+        "cn": "看左右后视镜",
+        "type": "🎧"
+      },
+      {
+        "ita": "Guarda avanti",
+        "cn": "注意前方",
+        "type": "🎧"
+      },
+      {
+        "ita": "Segui la segnaletica",
+        "cn": "遵守交通标线",
+        "type": "🎧"
+      },
+      {
+        "ita": "Stai nella tua corsia",
+        "cn": "保持车道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Usa correttamente gli indicatori",
+        "cn": "正确使用转向灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla lo stato del traffico",
+        "cn": "注意周围车辆",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rispetta il limite di 50 km/h in città",
+        "cn": "市区限速 50 公里/小时",
+        "type": "🎧"
+      },
+      {
+        "ita": "Dai la precedenza ai veicoli provenienti da destra",
+        "cn": "让右侧来车先行",
+        "type": "🎧"
+      },
+      {
+        "ita": "Cedi la precedenza ai pedoni sulle strisce",
+        "cn": "让斑马线上的行人",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fermati allo stop e riparti quando è libero",
+        "cn": "停止标志前停稳后再起步",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rispetta il semaforo rosso",
+        "cn": "遵守红灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni la distanza di sicurezza di 1 secondo in città",
+        "cn": "市区保持 1 秒安全距离",
+        "type": "🎧"
+      },
+      {
+        "ita": "Guida in modo fluido ed ecologico",
+        "cn": "平稳、经济地驾驶",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rallenta in prossimità delle scuole",
+        "cn": "学校附近减速",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla gli specchietti a ogni cambiamento di direzione",
+        "cn": "每次改变方向都看后视镜",
+        "type": "🎧"
+      }
+    ]
+  },
+  {
+    "id": "modulo3",
+    "title": "模块三：转弯",
+    "subtitle": "Svolta / Curva",
+    "badge": "高频",
+    "badgeClass": "badge-high",
+    "desc": "转弯指令是路考中的高频考点，考官重点观察你的观察习惯和操作规范性。",
+    "mnemonic": "\"左右转弯先减速，三十米前灯亮起，看镜看人看标志，不压线来不切弯\"",
+    "phrases": [
+      {
+        "ita": "Svolta a destra",
+        "cn": "右转",
+        "type": "🎧"
+      },
+      {
+        "ita": "Svolta a sinistra",
+        "cn": "左转",
+        "type": "🎧"
+      },
+      {
+        "ita": "Riduci la velocità prima della curva",
+        "cn": "转弯前减速",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla gli specchietti prima di girare",
+        "cn": "转弯前看后视镜",
+        "type": "🎧"
+      },
+      {
+        "ita": "Usa la freccia almeno 30 metri prima",
+        "cn": "提前30米打转向灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non tagliare la curva",
+        "cn": "不切弯/不压弯道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni la corsia durante la curva",
+        "cn": "转弯保持车道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla eventuali pedoni",
+        "cn": "注意行人",
+        "type": "🎧"
+      },
+      {
+        "ita": "Guarda la segnaletica verticale",
+        "cn": "注意交通标志",
+        "type": "🎧"
+      },
+      {
+        "ita": "Guarda eventuali veicoli provenienti dall'altra corsia",
+        "cn": "注意对向车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Segnala in anticipo con la freccia",
+        "cn": "提前打转向灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Dai la precedenza durante la svolta",
+        "cn": "转弯时让行",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non invadere la corsia opposta",
+        "cn": "不侵占对向车道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rallenta e scala marcia prima di girare",
+        "cn": "转弯前减速并降档",
+        "type": "🎧"
+      },
+      {
+        "ita": "Osserva pedoni e ciclisti prima di svoltare",
+        "cn": "转弯前留意行人和骑行者",
+        "type": "🎧"
+      }
+    ]
+  },
+  {
+    "id": "modulo4",
+    "title": "模块四：变道 & 超车",
+    "subtitle": "Cambio corsia / Sorpasso",
+    "badge": "高频",
+    "badgeClass": "badge-high",
+    "desc": "变道和超车是路考中风险最高的操作。",
+    "mnemonic": "\"灯镜盲区三步走，弯道实线绝不变，安全确认再超车，超完记得回原道\"",
+    "flow": "打灯（3秒前）→ 看中央镜 → 看侧镜 → 转头查盲区 → 平稳变道 → 关灯",
+    "phrases": [
+      {
+        "ita": "Cambia corsia a destra",
+        "cn": "向右变道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Cambia corsia a sinistra",
+        "cn": "向左变道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla gli specchietti prima di cambiare corsia",
+        "cn": "变道前看后视镜",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla l'angolo cieco",
+        "cn": "检查盲区",
+        "type": "🎧"
+      },
+      {
+        "ita": "Usa la freccia prima di cambiare corsia",
+        "cn": "变道前打转向灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non cambiare corsia in curva",
+        "cn": "弯道内不要变道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non cambiare corsia su linea continua",
+        "cn": "实线不要变道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Sorpassa solo se sicuro",
+        "cn": "确认安全再超车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla il traffico dietro",
+        "cn": "查看后方车辆",
+        "type": "🎧"
+      },
+      {
+        "ita": "Tornare nella corsia iniziale se necessario",
+        "cn": "必要时回原车道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Segnala la manovra con la freccia",
+        "cn": "打灯示意变道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rientra a destra dopo il sorpasso",
+        "cn": "超车后回右侧车道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non sorpassare in curva o in cresta",
+        "cn": "弯道或坡顶禁止超车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni distanza laterale dai ciclisti (minimo 1,5 m)",
+        "cn": "与骑行者保持横向距离（至少 1.5 米）",
+        "type": "🎧"
+      },
+      {
+        "ita": "Valuta lo spazio disponibile prima di sorpassare",
+        "cn": "超车前评估可用空间",
+        "type": "🎧"
+      }
+    ]
+  },
+  {
+    "id": "modulo5",
+    "title": "模块五：环岛",
+    "subtitle": "Rotatoria",
+    "badge": "必考！",
+    "badgeClass": "badge-must-know",
+    "desc": "<strong>⚠️ 最高频考点！</strong> 意大利以环岛多著称，几乎所有路考都会经过环岛。",
+    "star": true,
+    "mnemonic": "\"一出口右灯外道出，二出口无灯过一打，三出口左灯内道走，出环打右不忘后\"",
+    "phrases": [
+      {
+        "ita": "Entra nella rotonda",
+        "cn": "进入环岛",
+        "type": "🎧"
+      },
+      {
+        "ita": "Prendi la prima uscita",
+        "cn": "第一个出口驶出",
+        "type": "🎧"
+      },
+      {
+        "ita": "Prendi la seconda uscita",
+        "cn": "第二个出口驶出",
+        "type": "🎧"
+      },
+      {
+        "ita": "Prendi la terza uscita",
+        "cn": "第三个及之后出口驶出",
+        "type": "🎧"
+      },
+      {
+        "ita": "Dai la precedenza a chi è dentro la rotonda",
+        "cn": "让行环岛内车辆",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non fermarti dentro la rotonda",
+        "cn": "不要在环岛内停车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Segnala l'uscita dalla rotonda",
+        "cn": "驶出环岛时打右灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni la corsia nella rotonda",
+        "cn": "在环岛内保持车道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rallenta in prossimità della rotonda",
+        "cn": "接近环岛时减速",
+        "type": "🎧"
+      },
+      {
+        "ita": "Segnala l'immissione se cambi corsia",
+        "cn": "变道进入环岛时打灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Conta le uscite per non sbagliare",
+        "cn": "数出口避免走错",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non superare all'interno della rotonda",
+        "cn": "环岛内不超车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Usa la freccia destra per uscire",
+        "cn": "驶出时打右灯",
+        "type": "🎧"
+      }
+    ]
+  },
+  {
     "id": "modulo7",
-    "title": "模块九：坡道起步",
+    "title": "模块六：坡道起步",
     "subtitle": "Partenza in salita",
     "badge": "中频",
     "badgeClass": "badge-medium",
@@ -2329,63 +2098,380 @@ const MODULES = [
     ]
   },
   {
-    "id": "modulo11",
-    "title": "模块十：考试收尾",
-    "subtitle": "Fine esame",
-    "badge": "中频",
-    "badgeClass": "badge-medium",
-    "desc": "回到出发地点后的收尾流程，做不好也会扣分！",
+    "id": "modulo9",
+    "title": "模块七：灯光使用",
+    "subtitle": "Uso luci",
+    "badge": "高频",
+    "badgeClass": "badge-high",
+    "desc": "考官会在路考中让你演示各种灯光操作。意大利对灯光使用有严格规定。",
     "phrases": [
       {
-        "ita": "Torna al punto di partenza",
-        "cn": "返回出发点",
+        "ita": "Accendi i fari anabbaglianti",
+        "cn": "打开近光灯",
         "type": "🎧"
       },
       {
-        "ita": "Parcheggia e spegni il motore",
-        "cn": "停车并熄火",
+        "ita": "Accendi gli abbaglianti",
+        "cn": "打开远光灯",
         "type": "🎧"
       },
       {
-        "ita": "Lascia il veicolo in sicurezza",
-        "cn": "安全离开车辆",
+        "ita": "Spegni gli abbaglianti",
+        "cn": "关掉远光灯",
         "type": "🎧"
       },
       {
-        "ita": "Firma il verbale",
-        "cn": "签考试记录",
+        "ita": "Accendi le luci di posizione",
+        "cn": "打开示宽灯",
         "type": "🎧"
       },
       {
-        "ita": "Grazie e arrivederci",
-        "cn": "感谢并告别",
-        "type": "🎧🗣️"
-      },
-      {
-        "ita": "Spegni gli indicatori di direzione",
-        "cn": "关闭转向灯",
+        "ita": "Accendi i fendinebbia anteriori",
+        "cn": "打开前雾灯",
         "type": "🎧"
       },
       {
-        "ita": "Controlla che non arrivi nessuno prima di aprire la porta",
-        "cn": "开车门前确认周围安全",
+        "ita": "Accendi i retronebbia",
+        "cn": "打开后雾灯",
         "type": "🎧"
       },
       {
-        "ita": "L'esame è terminato, può scendere",
-        "cn": "考试结束，您可以下车",
+        "ita": "Usa le luci in galleria",
+        "cn": "隧道内开灯",
         "type": "🎧"
       },
       {
-        "ita": "Ritiri i suoi documenti",
-        "cn": "取回您的证件",
+        "ita": "Verifica il funzionamento delle frecce",
+        "cn": "检查转向灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Accendi le luci di notte nei centri abitati",
+        "cn": "居民区夜间开启车灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Usa gli abbaglianti fuori dai centri abitati",
+        "cn": "非居民区使用远光灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Abbassa gli abbaglianti in presenza di altri veicoli",
+        "cn": "会车时切换为近光灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Usa i fendinebbia solo con visibilità inferiore a 50 m",
+        "cn": "能见度低于 50 米才用雾灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Verifica che tutte le luci funzionino",
+        "cn": "检查所有灯光是否正常",
+        "type": "🎧"
+      }
+    ]
+  },
+  {
+    "id": "modulo13",
+    "title": "模块八：行人、骑行者与弱势使用者",
+    "subtitle": "Pedoni, Ciclisti & Utenti deboli",
+    "badge": "高频",
+    "badgeClass": "badge-high",
+    "desc": "意大利路考对<strong>弱势道路使用者</strong>（行人、儿童、骑行者、公交车）保护极为严格，未让行可直接挂科。",
+    "phrases": [
+      {
+        "ita": "Dai la precedenza ai pedoni",
+        "cn": "给行人让行",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fermati per far attraversare i bambini",
+        "cn": "停车让孩子通过",
+        "type": "🎧"
+      },
+      {
+        "ita": "Lasci spazio ai ciclisti (minimo 1,5 m)",
+        "cn": "给骑行者留出空间（至少 1.5 米）",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla i ciclisti prima di aprire la portiera",
+        "cn": "开车门前留意骑行者",
+        "type": "🎧"
+      },
+      {
+        "ita": "Dai la precedenza agli autobus in partenza",
+        "cn": "给起步的公交车让行",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fai attenzione agli utenti deboli sulla carreggiata",
+        "cn": "注意路面上的弱势使用者",
+        "type": "🎧"
+      }
+    ]
+  },
+  {
+    "id": "modulo6",
+    "title": "模块九：停车 & 倒车",
+    "subtitle": "Parcheggio / Retromarcia",
+    "badge": "高频",
+    "badgeClass": "badge-high",
+    "desc": "停车操作包括L型停车、S型停车、平行停车、倒车等。",
+    "mnemonic": "\"一灯二镜三观察，慢倒转头看后方；L看灯S看半窗，停稳拉刹距半米\"",
+    "phrases": [
+      {
+        "ita": "Parcheggia parallelamente al marciapiede",
+        "cn": "平行停车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fai un parcheggio a L",
+        "cn": "L型停车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fai un parcheggio a S",
+        "cn": "S型停车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fai retromarcia lentamente",
+        "cn": "慢慢倒车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla gli specchietti durante il parcheggio",
+        "cn": "停车时看后视镜",
+        "type": "🎧"
+      },
+      {
+        "ita": "Usa la freccia quando parcheggi",
+        "cn": "停车前打转向灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni la distanza dal marciapiede",
+        "cn": "与人行道保持距离",
+        "type": "🎧"
+      },
+      {
+        "ita": "Ferma il veicolo completamente",
+        "cn": "完全停车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Tieni il freno a mano inserito",
+        "cn": "拉紧手刹",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla lo spazio dietro",
+        "cn": "检查车后空间",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non urtare altri veicoli",
+        "cn": "不碰其他车辆",
+        "type": "🎧"
+      },
+      {
+        "ita": "Inserisci la retromarcia",
+        "cn": "挂倒档",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fai un parcheggio in retromarcia a L",
+        "cn": "L 型倒车入库",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fai un parcheggio in retromarcia a S",
+        "cn": "S 型倒车入库",
+        "type": "🎧"
+      },
+      {
+        "ita": "Esci dal parcheggio in sicurezza",
+        "cn": "安全驶出车位",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fai retromarcia in linea retta per 30 metri",
+        "cn": "直线倒车约 30 米",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fai un'inversione di marcia (manovra a U)",
+        "cn": "掉头（U 型转弯）",
+        "type": "🎧"
+      },
+      {
+        "ita": "Controlla gli angoli ciechi durante la retromarcia",
+        "cn": "倒车过程中检查盲区",
+        "type": "🎧"
+      },
+      {
+        "ita": "Usa lo specchietto destro per il parcheggio a destra",
+        "cn": "右侧停车时用右后视镜",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni il veicolo a non più di 50 cm dal marciapiede",
+        "cn": "车辆距路缘不超过 50 厘米",
+        "type": "🎧"
+      },
+      {
+        "ita": "Ferma tra le linee di delimitazione",
+        "cn": "停在标线范围内",
+        "type": "🎧"
+      }
+    ]
+  },
+  {
+    "id": "modulo8",
+    "title": "模块十：高速公路",
+    "subtitle": "Autostrada",
+    "badge": "高频",
+    "badgeClass": "badge-high",
+    "desc": "如果考场位置允许，考官会带你上高速。意大利高速公路操作规范严格。",
+    "mnemonic": "\"加速道到匹配速，打灯看镜盲区入；右行左超不右边，提前变道出口出\"",
+    "phrases": [
+      {
+        "ita": "Imbocca l'autostrada",
+        "cn": "驶入高速公路",
+        "type": "🎧"
+      },
+      {
+        "ita": "Accelera nella corsia di accelerazione",
+        "cn": "在加速车道加速",
+        "type": "🎧"
+      },
+      {
+        "ita": "Guarda bene prima di immetterti",
+        "cn": "汇入前仔细观察",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni la destra",
+        "cn": "保持在右侧车道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rispetta i limiti di velocità in autostrada",
+        "cn": "遵守高速限速",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non sorpassare a destra",
+        "cn": "不要右侧超车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Prepara l'uscita con anticipo",
+        "cn": "提前准备出口",
+        "type": "🎧"
+      },
+      {
+        "ita": "Entra nella corsia di decelerazione",
+        "cn": "进入减速车道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Esci dall'autostrada",
+        "cn": "驶出高速公路",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rispetta il limite di 130 km/h in autostrada",
+        "cn": "高速限速 130 公里/小时",
+        "type": "🎧"
+      },
+      {
+        "ita": "Mantieni la distanza di sicurezza (almeno 100 m)",
+        "cn": "保持安全距离（至少 100 米）",
+        "type": "🎧"
+      },
+      {
+        "ita": "Usa le frecce per immettersi e uscire",
+        "cn": "进出高速都打转向灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Stai attento ai cartelli di limite temporaneo",
+        "cn": "注意临时限速牌",
+        "type": "🎧"
+      },
+      {
+        "ita": "In caso di nebbia usa fendinebbia o frecce",
+        "cn": "雾天使用雾灯或双闪",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non fermarti in corsia di emergenza senza necessità",
+        "cn": "非必要不占用应急车道",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rispetta il divieto di sorpasso per i mezzi pesanti",
+        "cn": "遵守货车禁超规定",
+        "type": "🎧"
+      }
+    ]
+  },
+  {
+    "id": "modulo12",
+    "title": "模块十一：隧道、铁路道口与特殊路段",
+    "subtitle": "Galleria, Passaggio a livello & Tratti speciali",
+    "badge": "中频",
+    "badgeClass": "badge-medium",
+    "desc": "<strong>⚠️ 高风险路段！</strong> 隧道、铁路道口、桥梁与山路是路考重点观察项。2026 年新规已将「郊外道路 + 夜间」纳入强制练车（8 小时）。",
+    "phrases": [
+      {
+        "ita": "Entra in galleria e accendi le luci",
+        "cn": "进入隧道并开启车灯",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rispetta la distanza di sicurezza in galleria",
+        "cn": "隧道内保持安全距离",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non sorpassare all'interno della galleria",
+        "cn": "隧道内禁止超车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fermati al passaggio a livello se è chiuso",
+        "cn": "铁路道口关闭时停车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Attraversa il passaggio a livello solo se è aperto",
+        "cn": "确认栏杆开启再通过道口",
+        "type": "🎧"
+      },
+      {
+        "ita": "Non fermarti sopra il passaggio a livello",
+        "cn": "不在道口上方停车",
+        "type": "🎧"
+      },
+      {
+        "ita": "Rallenta sui ponti e sui dossi",
+        "cn": "桥面与坡顶减速",
+        "type": "🎧"
+      },
+      {
+        "ita": "Fai attenzione alle strade strette e alle curve di montagna",
+        "cn": "山路窄弯谨慎驾驶",
         "type": "🎧"
       }
     ]
   },
   {
     "id": "modulo10",
-    "title": "模块十一：紧急情况",
+    "title": "模块十二：紧急情况",
     "subtitle": "Emergenza",
     "badge": "高频",
     "badgeClass": "badge-high",
@@ -2486,142 +2572,56 @@ const MODULES = [
     ]
   },
   {
-    "id": "modulo8",
-    "title": "模块十二：高速公路",
-    "subtitle": "Autostrada",
-    "badge": "高频",
-    "badgeClass": "badge-high",
-    "desc": "如果考场位置允许，考官会带你上高速。意大利高速公路操作规范严格。",
-    "mnemonic": "\"加速道到匹配速，打灯看镜盲区入；右行左超不右边，提前变道出口出\"",
-    "phrases": [
-      {
-        "ita": "Imbocca l'autostrada",
-        "cn": "驶入高速公路",
-        "type": "🎧"
-      },
-      {
-        "ita": "Accelera nella corsia di accelerazione",
-        "cn": "在加速车道加速",
-        "type": "🎧"
-      },
-      {
-        "ita": "Guarda bene prima di immetterti",
-        "cn": "汇入前仔细观察",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni la destra",
-        "cn": "保持在右侧车道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rispetta i limiti di velocità in autostrada",
-        "cn": "遵守高速限速",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non sorpassare a destra",
-        "cn": "不要右侧超车",
-        "type": "🎧"
-      },
-      {
-        "ita": "Prepara l'uscita con anticipo",
-        "cn": "提前准备出口",
-        "type": "🎧"
-      },
-      {
-        "ita": "Entra nella corsia di decelerazione",
-        "cn": "进入减速车道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Esci dall'autostrada",
-        "cn": "驶出高速公路",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rispetta il limite di 130 km/h in autostrada",
-        "cn": "高速限速 130 公里/小时",
-        "type": "🎧"
-      },
-      {
-        "ita": "Mantieni la distanza di sicurezza (almeno 100 m)",
-        "cn": "保持安全距离（至少 100 米）",
-        "type": "🎧"
-      },
-      {
-        "ita": "Usa le frecce per immettersi e uscire",
-        "cn": "进出高速都打转向灯",
-        "type": "🎧"
-      },
-      {
-        "ita": "Stai attento ai cartelli di limite temporaneo",
-        "cn": "注意临时限速牌",
-        "type": "🎧"
-      },
-      {
-        "ita": "In caso di nebbia usa fendinebbia o frecce",
-        "cn": "雾天使用雾灯或双闪",
-        "type": "🎧"
-      },
-      {
-        "ita": "Non fermarti in corsia di emergenza senza necessità",
-        "cn": "非必要不占用应急车道",
-        "type": "🎧"
-      },
-      {
-        "ita": "Rispetta il divieto di sorpasso per i mezzi pesanti",
-        "cn": "遵守货车禁超规定",
-        "type": "🎧"
-      }
-    ]
-  },
-  {
-    "id": "modulo12",
-    "title": "模块十三：隧道、铁路道口与特殊路段",
-    "subtitle": "Galleria, Passaggio a livello & Tratti speciali",
+    "id": "modulo11",
+    "title": "模块十三：考试收尾",
+    "subtitle": "Fine esame",
     "badge": "中频",
     "badgeClass": "badge-medium",
-    "desc": "<strong>⚠️ 高风险路段！</strong> 隧道、铁路道口、桥梁与山路是路考重点观察项。2026 年新规已将「郊外道路 + 夜间」纳入强制练车（8 小时）。",
+    "desc": "回到出发地点后的收尾流程，做不好也会扣分！",
     "phrases": [
       {
-        "ita": "Entra in galleria e accendi le luci",
-        "cn": "进入隧道并开启车灯",
+        "ita": "Torna al punto di partenza",
+        "cn": "返回出发点",
         "type": "🎧"
       },
       {
-        "ita": "Rispetta la distanza di sicurezza in galleria",
-        "cn": "隧道内保持安全距离",
+        "ita": "Parcheggia e spegni il motore",
+        "cn": "停车并熄火",
         "type": "🎧"
       },
       {
-        "ita": "Non sorpassare all'interno della galleria",
-        "cn": "隧道内禁止超车",
+        "ita": "Lascia il veicolo in sicurezza",
+        "cn": "安全离开车辆",
         "type": "🎧"
       },
       {
-        "ita": "Fermati al passaggio a livello se è chiuso",
-        "cn": "铁路道口关闭时停车",
+        "ita": "Firma il verbale",
+        "cn": "签考试记录",
         "type": "🎧"
       },
       {
-        "ita": "Attraversa il passaggio a livello solo se è aperto",
-        "cn": "确认栏杆开启再通过道口",
+        "ita": "Grazie e arrivederci",
+        "cn": "感谢并告别",
+        "type": "🎧🗣️"
+      },
+      {
+        "ita": "Spegni gli indicatori di direzione",
+        "cn": "关闭转向灯",
         "type": "🎧"
       },
       {
-        "ita": "Non fermarti sopra il passaggio a livello",
-        "cn": "不在道口上方停车",
+        "ita": "Controlla che non arrivi nessuno prima di aprire la porta",
+        "cn": "开车门前确认周围安全",
         "type": "🎧"
       },
       {
-        "ita": "Rallenta sui ponti e sui dossi",
-        "cn": "桥面与坡顶减速",
+        "ita": "L'esame è terminato, può scendere",
+        "cn": "考试结束，您可以下车",
         "type": "🎧"
       },
       {
-        "ita": "Fai attenzione alle strade strette e alle curve di montagna",
-        "cn": "山路窄弯谨慎驾驶",
+        "ita": "Ritiri i suoi documenti",
+        "cn": "取回您的证件",
         "type": "🎧"
       }
     ]
@@ -2865,17 +2865,17 @@ function renderAppendices() {
 
         <tbody>
 
-          <tr><td>Codice della Strada Art.36</td><td>禁止阻塞交叉口</td><td>模块十一</td></tr>
+          <tr><td>Codice della Strada Art.36</td><td>禁止阻塞交叉口</td><td>模块十二</td></tr>
 
-          <tr><td>Codice della Strada Art.54</td><td>事故车辆应立即移至安全区域</td><td>模块十一</td></tr>
+          <tr><td>Codice della Strada Art.54</td><td>事故车辆应立即移至安全区域</td><td>模块十二</td></tr>
 
-          <tr><td>Codice della Strada Art.117</td><td>紧急情况可使用喇叭</td><td>模块十一</td></tr>
+          <tr><td>Codice della Strada Art.117</td><td>紧急情况可使用喇叭</td><td>模块十二</td></tr>
 
-          <tr><td>Codice della Strada Art.121</td><td>路考需验证车辆控制和安全知识</td><td>模块八</td></tr>
+          <tr><td>Codice della Strada Art.121</td><td>路考需验证车辆控制和安全知识</td><td>模块〇</td></tr>
 
-          <tr><td>Codice della Strada Art.125</td><td>事故后必须停车、熄火、设警示</td><td>模块十一</td></tr>
+          <tr><td>Codice della Strada Art.125</td><td>事故后必须停车、熄火、设警示</td><td>模块十二</td></tr>
 
-          <tr><td>Codice della Strada Art.152-153</td><td>灯光使用规定</td><td>模块六</td></tr>
+          <tr><td>Codice della Strada Art.152-153</td><td>灯光使用规定</td><td>模块七</td></tr>
 
           <tr><td>DM 30/11/2010</td><td>路考程序和评分标准</td><td>全部</td></tr>
 
@@ -2969,33 +2969,33 @@ function renderAppendices() {
 
       <div class="study-grid">
 
-        <div class="study-day"><span class="day-num">Day 1</span>模块八 考官问答<br>🗣️ 必须会说！</div>
+        <div class="study-day"><span class="day-num">Day 1</span>模块〇 考官问答<br>🗣️ 必须会说！</div>
 
-        <div class="study-day"><span class="day-num">Day 2</span>模块一 起步<br>+ 模块十收尾</div>
+        <div class="study-day"><span class="day-num">Day 2</span>模块一 起步<br>+ 模块十三收尾</div>
 
-        <div class="study-day"><span class="day-num">Day 3</span>模块〇 行驶<br>基本功</div>
+        <div class="study-day"><span class="day-num">Day 3</span>模块二 行驶<br>基本功</div>
 
-        <div class="study-day"><span class="day-num">Day 4</span>模块二 转弯<br>30米灯+不切弯</div>
+        <div class="study-day"><span class="day-num">Day 4</span>模块三 转弯<br>30米灯+不切弯</div>
 
         <div class="study-day"><span class="day-num">Day 5</span>模块四 变道超车<br>镜-镜-盲点</div>
 
         <div class="study-day"><span class="day-num">Day 6</span>模块五 环岛 ⭐<br>意大利必考！</div>
 
-        <div class="study-day"><span class="day-num">Day 7</span>模块三 停车倒车<br>L型和S型</div>
+        <div class="study-day"><span class="day-num">Day 7</span>模块九 停车倒车<br>L型和S型</div>
 
-        <div class="study-day"><span class="day-num">Day 8</span>模块九 坡道起步<br>离合控制</div>
+        <div class="study-day"><span class="day-num">Day 8</span>模块六 坡道起步<br>离合控制</div>
 
-        <div class="study-day"><span class="day-num">Day 9</span>模块十二 高速公路<br>加速+右侧</div>
+        <div class="study-day"><span class="day-num">Day 9</span>模块十 高速公路<br>加速+右侧</div>
 
-        <div class="study-day"><span class="day-num">Day 10</span>模块六 灯光使用<br>各种灯光场景</div>
+        <div class="study-day"><span class="day-num">Day 10</span>模块七 灯光使用<br>各种灯光场景</div>
 
-        <div class="study-day"><span class="day-num">Day 11</span>模块十一 紧急情况<br>事故处理流程</div>
+        <div class="study-day"><span class="day-num">Day 11</span>模块十二 紧急情况<br>事故处理流程</div>
 
         <div class="study-day"><span class="day-num">Day 12</span>全模块模拟<br>边做边念指令</div>
 
-        <div class="study-day"><span class="day-num">Day 13</span>模块十三 隧道/铁路道口<br>高风险路段</div>
+        <div class="study-day"><span class="day-num">Day 13</span>模块十一 隧道/铁路道口<br>高风险路段</div>
 
-        <div class="study-day"><span class="day-num">Day 14</span>模块七 弱势使用者<br>让行必考</div>
+        <div class="study-day"><span class="day-num">Day 14</span>模块八 弱势使用者<br>让行必考</div>
 
         <div class="study-day"><span class="day-num">Day 15</span>模块十四 考官流程<br>三阶段全过</div>
 
