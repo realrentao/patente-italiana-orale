@@ -583,6 +583,10 @@ body {
 
 
 .phrase-cn { color: var(--text-accent); font-size: 0.82rem; }
+.phrase-cn.clickable { cursor: pointer; transition: color .15s; }
+.phrase-cn.clickable:hover { color: var(--flag-green); text-decoration: underline; }
+.phrase-cn.clickable.loading { opacity: .6; }
+.phrase-cn.clickable::before { content: '\1F50A '; opacity: .4; font-size: .8em; margin-right: 2px; }
 
 .phrase-type { text-align: center; font-size: 0.9rem; }
 
@@ -1102,6 +1106,16 @@ const TEXT_HASH = {"Regola il sedile": "0cefe10c", "Regola il poggiatesta": "435
 
 
 
+const TEXT_HASH_ZH = {"三角警示牌在哪里？": "5e3c025f", "三角警示牌应放置在多远距离？": "2bd6136e", "仪表盘红色指示灯？": "41ca0400", "何时必须穿反光背心？": "5c44f402", "冷胎时用胎压计检查": "a7296122", "冷车平地用油尺检查，油位在min-max之间": "64d749b3", "冷车时查看引擎盖下透明储液罐液位": "dee08bc9", "前推左手拨杆，仪表盘亮蓝色指示灯": "e8d9c43e", "在后备箱，应放在车后至少50米处": "455ae6c0", "在高速或郊外下车时（即便白天）必须穿": "ac915196", "夜间如何示警？": "474c0cf5", "如何开启双闪？": "956139af", "如何打开近光灯？": "e2b886b1", "如何打开远光灯？": "ce03a459", "如何检查冷却液（防冻液）？": "4f6523e6", "如何检查燃油？": "c7bf90f8", "如何检查电瓶液位？": "2d019659", "如何检查胎面厚度？": "f8598922", "建议胎压见行驶证或车门旁标签": "ff47fca4", "开双闪、穿反光背心、在安全距离放三角牌": "c2734ba3", "开车需要带哪些证件？": "fa15df46", "怎么开启雨刷？": "56ec2f64", "怎么检查刹车油？": "e8b640cb", "怎么检查手刹？": "86228e0b", "怎么检查机油油位？": "515dd9b7", "怎么检查玻璃水？": "3ad96957", "怎么检查胎压？": "085ed2c4", "打开引擎盖检查刹车油壶液位": "6824ff88", "打开引擎盖检查玻璃水壶": "9195144e", "拉手刹确认车辆停稳，手刹杆不应拉到极限": "baa260ae", "按下仪表盘红色三角按钮": "93c96187", "提交证件": "f291c2fb", "旋转方向盘旁旋钮至近光灯符号": "d38eee67", "检查车门是否关好": "116b77eb", "正确的胎压是多少？": "8946734f", "用右手拨杆操作，可调速度": "84eadb79", "看仪表盘油量表或打开油箱盖确认": "68ef1563", "确认电极桩清洁、电解液液位正常": "7d32b411", "系好安全带": "00405764", "红色灯=严重故障/危险，必须立即停车": "130ec7e8", "表示机油压力低或油位不足，须立即停车检查": "889794ca", "调整后视镜": "0ebf42a3", "调整头枕": "3b5a6f05", "调整座椅": "441ed3a3", "通过磨损指示器检查，法定最小厚度1.6mm": "02a8f53b", "郊外至少50米、高速100米，弯道或坡顶前更远": "79d7b7ef", "驾照+行驶证+保险凭证": "2a9d1f79", "黄色机油警示灯表示什么？": "1a857072", "（可说）这是我的证件": "0560d9ba"};
+
+
+function getHashZh(cn) {
+
+  return TEXT_HASH_ZH[cn] || '';
+
+}
+
+
 function getHash(text) {
 
   return TEXT_HASH[text] || '';
@@ -1112,11 +1126,7 @@ function getHash(text) {
 
 
 
-async function loadAudio(text) {
-
-  const hash = getHash(text);
-
-  if (!hash) throw new Error('短语未找到对应音频');
+async function fetchAudioBuffer(hash) {
 
   if (audioCache.has(hash)) return audioCache.get(hash);
 
@@ -1155,6 +1165,30 @@ async function loadAudio(text) {
   audioCache.set(hash, audioBuffer);
 
   return audioBuffer;
+
+}
+
+
+
+async function loadAudio(text) {
+
+  const hash = getHash(text);
+
+  if (!hash) throw new Error('短语未找到对应音频');
+
+  return fetchAudioBuffer(hash);
+
+}
+
+
+
+async function loadAudioZh(cn) {
+
+  const hash = getHashZh(cn);
+
+  if (!hash) throw new Error('中文未找到对应音频');
+
+  return fetchAudioBuffer(hash);
 
 }
 
@@ -1277,6 +1311,107 @@ async function playItalian(text, rowElement) {
 }
 
 
+async function playChinese(cn, rowElement) {
+
+  if (isPlayingAll) stopPlayAll();
+
+  if (currentSource) {
+
+    try { currentSource.onended = null; currentSource.stop(); } catch(e) {}
+
+    currentSource = null;
+
+  }
+
+  if (currentRow) currentRow.classList.remove('playing');
+
+
+
+  const cnEl = rowElement ? rowElement.querySelector('.phrase-cn.clickable') : null;
+
+  if (cnEl) cnEl.classList.add('loading');
+
+  document.getElementById('playDot').classList.add('playing');
+
+  document.getElementById('playStatus').textContent = '中文加载中...';
+
+
+
+  try {
+
+    const audioBuffer = await loadAudioZh(cn);
+
+    if (cnEl) cnEl.classList.remove('loading');
+
+
+
+    const ctx = getCtx();
+
+    const source = ctx.createBufferSource();
+
+    source.buffer = audioBuffer;
+
+    source.connect(ctx.destination);
+
+
+
+    source.onended = () => {
+
+      if (rowElement) rowElement.classList.remove('playing');
+
+      if (cnEl) cnEl.classList.remove('loading');
+
+      document.getElementById('playDot').classList.remove('playing');
+
+      document.getElementById('playStatus').textContent = '点击意大利语发音';
+
+      currentSource = null;
+
+      currentRow = null;
+
+    };
+
+
+
+    currentSource = source;
+
+    if (rowElement) {
+
+      currentRow = rowElement;
+
+      rowElement.classList.add('playing');
+
+    }
+
+    document.getElementById('playStatus').textContent = '播放中文...';
+
+    source.start(0);
+
+
+
+  } catch(e) {
+
+    console.error('Chinese audio error:', e);
+
+    if (rowElement) rowElement.classList.remove('playing');
+
+    if (cnEl) cnEl.classList.remove('loading');
+
+    document.getElementById('playDot').classList.remove('playing');
+
+    document.getElementById('playStatus').textContent = '就绪';
+
+    currentSource = null;
+
+    currentRow = null;
+
+    showToast('⚠️ ' + e.message);
+
+  }
+
+}
+
+
 
 
 function stopPlayAll() {
@@ -1322,7 +1457,14 @@ async function playAllInModule(modId) {
 
   const rows = Array.from(section.querySelectorAll('.phrase-row'));
 
-  const items = rows.map(r => ({ text: r.dataset.ita, row: r })).filter(x => x.text);
+  const items = rows.map(r => ({ text: r.dataset.ita, cn: r.dataset.cn, row: r })).filter(x => x.text);
+
+  // 交替播放：意大利语 → 中文 → 意大利语 → 中文 ...
+  const steps = [];
+  items.forEach(it => {
+    steps.push({ lang: 'ita', text: it.text, row: it.row });
+    if (it.cn) steps.push({ lang: 'cn', text: it.cn, row: it.row });
+  });
 
   if (!items.length) { showToast('该模块暂无可播放内容'); return; }
 
@@ -1330,7 +1472,7 @@ async function playAllInModule(modId) {
 
   isPlayingAll = true;
 
-  playQueue = items;
+  playQueue = steps;
 
   playQueueIndex = -1;
 
@@ -1371,7 +1513,9 @@ async function playNextInQueue() {
 
   }
 
-  const { text, row } = playQueue[playQueueIndex];
+  const step = playQueue[playQueueIndex];
+
+  const { text, row, lang } = step;
 
   document.querySelectorAll('.phrase-row.playing').forEach(r => r.classList.remove('playing'));
 
@@ -1381,11 +1525,15 @@ async function playNextInQueue() {
 
   const st = document.getElementById('playStatus');
 
-  if (st) st.textContent = '播放中... (' + (playQueueIndex + 1) + '/' + playQueue.length + ')';
+  const pairNum = Math.floor(playQueueIndex / 2) + 1;
+
+  const totalPairs = Math.ceil(playQueue.length / 2);
+
+  if (st) st.textContent = (lang === 'cn' ? '中文 ' : '意大利语 ') + '(' + pairNum + '/' + totalPairs + ')';
 
   try {
 
-    const audioBuffer = await loadAudio(text);
+    const audioBuffer = lang === 'cn' ? await loadAudioZh(text) : await loadAudio(text);
 
     if (!isPlayingAll) return;       // 加载期间被取消
 
@@ -2941,7 +3089,7 @@ function buildMainContent() {
 
     html += `<span class="module-badge ${mod.badgeClass}">${mod.badge}</span>`;
 
-    html += `<button type="button" class="play-all-btn" data-mod="${mod.id}">🔊 全部播放</button>`;
+    html += `<button type="button" class="play-all-btn" data-mod="${mod.id}" title="意大利语 + 中文 交替播放">🔊 全部播放</button>`;
 
     html += `</div>`;
 
@@ -3003,13 +3151,13 @@ function buildPhraseTable(phrases) {
 
   phrases.forEach((p, i) => {
 
-    html += `<tr class="phrase-row" data-ita="${escapeAttr(p.ita)}">
+    html += `<tr class="phrase-row" data-ita="${escapeAttr(p.ita)}" data-cn="${escapeAttr(p.cn)}">
 
       <td class="phrase-num">${i + 1}</td>
 
       <td><span class="phrase-ita clickable"><span class="spinner"></span>${p.ita}</span></td>
 
-      <td class="phrase-cn">${p.cn}</td>
+      <td class="phrase-cn clickable" title="点击播放中文">${p.cn}</td>
 
       <td class="phrase-type">${p.type}</td>
 
@@ -3217,6 +3365,15 @@ function attachPhraseHandlers() {
 
     });
 
+  });
+
+  document.querySelectorAll('.phrase-cn.clickable').forEach(el => {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const row = this.closest('.phrase-row');
+      const cn = row ? row.dataset.cn : this.textContent.trim();
+      if (cn) playChinese(cn, row);
+    });
   });
 
   document.querySelectorAll('.play-all-btn').forEach(btn => {
