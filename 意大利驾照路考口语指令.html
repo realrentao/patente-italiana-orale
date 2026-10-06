@@ -402,6 +402,24 @@ body {
 
 
 
+.play-all-btn {
+
+  font-size: 0.78rem; font-weight: 700; flex-shrink: 0; white-space: nowrap;
+
+  padding: 6px 14px; border-radius: 14px; cursor: pointer;
+
+  border: 1px solid var(--flag-green); background: var(--green-bg); color: var(--flag-green);
+
+  transition: all .15s ease;
+
+}
+
+.play-all-btn:hover { background: var(--flag-green); color: #fff; }
+
+.play-all-btn.playing { background: var(--flag-red); border-color: var(--flag-red); color: #fff; }
+
+
+
 .module-desc {
 
   font-size: 0.85rem; color: var(--text-accent);
@@ -1056,6 +1074,16 @@ let audioCtx = null;
 
 
 
+let isPlayingAll = false;
+
+let playQueue = [];
+
+let playQueueIndex = -1;
+
+let currentPlayAllMod = null;
+
+
+
 function getCtx() {
 
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1149,6 +1177,8 @@ function stopAudio() {
 async function playItalian(text, rowElement) {
 
   // Cleanup previous
+
+  if (isPlayingAll) stopPlayAll();
 
   if (currentSource) {
 
@@ -1245,6 +1275,152 @@ async function playItalian(text, rowElement) {
   }
 
 }
+
+
+
+
+function stopPlayAll() {
+
+  isPlayingAll = false;
+
+  playQueue = [];
+
+  playQueueIndex = -1;
+
+  currentPlayAllMod = null;
+
+  stopAudio();
+
+  document.querySelectorAll('.phrase-row.playing').forEach(r => r.classList.remove('playing'));
+
+  document.querySelectorAll('.play-all-btn.playing').forEach(b => { b.classList.remove('playing'); b.textContent = '🔊 全部播放'; });
+
+  const dot = document.getElementById('playDot'); if (dot) dot.classList.remove('playing');
+
+  const st = document.getElementById('playStatus'); if (st) st.textContent = '点击意大利语发音';
+
+}
+
+
+
+
+async function playAllInModule(modId) {
+
+  if (isPlayingAll) {
+
+    const wasSame = currentPlayAllMod === modId;
+
+    stopPlayAll();
+
+    if (wasSame) return;            // 同一模块按钮 = 暂停
+
+  }
+
+  const section = document.getElementById(modId);
+
+  if (!section) return;
+
+  const rows = Array.from(section.querySelectorAll('.phrase-row'));
+
+  const items = rows.map(r => ({ text: r.dataset.ita, row: r })).filter(x => x.text);
+
+  if (!items.length) { showToast('该模块暂无可播放内容'); return; }
+
+  currentPlayAllMod = modId;
+
+  isPlayingAll = true;
+
+  playQueue = items;
+
+  playQueueIndex = -1;
+
+  const btn = document.querySelector('.play-all-btn[data-mod="' + modId + '"]');
+
+  if (btn) { btn.classList.add('playing'); btn.textContent = '⏹ 停止'; }
+
+  playNextInQueue();
+
+}
+
+
+
+
+async function playNextInQueue() {
+
+  if (!isPlayingAll) return;
+
+  playQueueIndex++;
+
+  if (playQueueIndex >= playQueue.length) {
+
+    const btn = currentPlayAllMod ? document.querySelector('.play-all-btn[data-mod="' + currentPlayAllMod + '"]') : null;
+
+    if (btn) { btn.classList.remove('playing'); btn.textContent = '🔊 全部播放'; }
+
+    document.querySelectorAll('.phrase-row.playing').forEach(r => r.classList.remove('playing'));
+
+    const dot = document.getElementById('playDot'); if (dot) dot.classList.remove('playing');
+
+    const st = document.getElementById('playStatus'); if (st) st.textContent = '本模块播放完毕 ✓';
+
+    isPlayingAll = false;
+
+    currentPlayAllMod = null;
+
+    return;
+
+  }
+
+  const { text, row } = playQueue[playQueueIndex];
+
+  document.querySelectorAll('.phrase-row.playing').forEach(r => r.classList.remove('playing'));
+
+  if (row) row.classList.add('playing');
+
+  const dot = document.getElementById('playDot'); if (dot) dot.classList.add('playing');
+
+  const st = document.getElementById('playStatus');
+
+  if (st) st.textContent = '播放中... (' + (playQueueIndex + 1) + '/' + playQueue.length + ')';
+
+  try {
+
+    const audioBuffer = await loadAudio(text);
+
+    if (!isPlayingAll) return;       // 加载期间被取消
+
+    const ctx = getCtx();
+
+    const source = ctx.createBufferSource();
+
+    source.buffer = audioBuffer;
+
+    source.connect(ctx.destination);
+
+    currentSource = source;
+
+    currentRow = row || null;
+
+    source.onended = () => {
+
+      if (row) row.classList.remove('playing');
+
+      if (isPlayingAll) setTimeout(playNextInQueue, 350);  // 句间短暂停顿
+
+    };
+
+    source.start(0);
+
+  } catch (e) {
+
+    console.error('Play-all audio error:', e);
+
+    if (isPlayingAll) setTimeout(playNextInQueue, 300);
+
+  }
+
+}
+
 
 
 
@@ -2765,6 +2941,8 @@ function buildMainContent() {
 
     html += `<span class="module-badge ${mod.badgeClass}">${mod.badge}</span>`;
 
+    html += `<button type="button" class="play-all-btn" data-mod="${mod.id}">🔊 全部播放</button>`;
+
     html += `</div>`;
 
     if (mod.desc) html += `<div class="module-desc">${mod.desc}</div>`;
@@ -3036,6 +3214,22 @@ function attachPhraseHandlers() {
       const text = row ? row.dataset.ita : this.textContent.replace(/[🔊]/g, '').trim();
 
       if (text) playItalian(text, row);
+
+    });
+
+  });
+
+  document.querySelectorAll('.play-all-btn').forEach(btn => {
+
+    btn.addEventListener('click', function(e) {
+
+      e.stopPropagation();
+
+      getCtx();                       // 用户手势内激活音频上下文
+
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+
+      playAllInModule(btn.dataset.mod);
 
     });
 
